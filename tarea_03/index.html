@@ -1,0 +1,93 @@
+<html>
+	<head>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	</head>
+	
+	<body>
+		<div id= "fondo">
+			<div id= "contenido">
+				<div class= "contenedor">
+					<label type="label">Nombre:</label>
+					<input type="text" name="name" id="name" value=""></input>
+					<br/>
+					<label type="label">Primer apellido:</label>
+					<input type="text" name="first_last_name" id="first_last_name" value=""></input>
+					<br/>
+					<label type="label">Segundo apellido:</label>
+					<input type="text" name="second_last_name" id="second_last_name" value=""></input>
+					<br/>
+					<label type="label">Telefono:</label>
+					<input type="text" name="phone" id="phone" value=""></input>
+					<br/>
+					<button onclick="send_date()">ENVIAR</button>
+					
+					<div id="div_table">
+						<table border="1" width=100%;>
+							<thead id="head_table">
+								
+							</thead>
+							<tbody id="body_table">
+
+							</tbody>
+						</table>
+					</div>
+
+					<script type="text/javascript" languaje="javascript">
+						
+						function send_date(){
+							
+							
+							var name = document.getElementById("name").value;
+							var first_last_name = document.getElementById("first_last_name").value;
+							var second_last_name = document.getElementById("second_last_name").value;
+							var phone = document.getElementById("phone").value;
+
+							var date = new  XMLHttpRequest();
+							date.open("POST", "php_inicial_01-003.php", true);
+							date.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+							date.send("name="+name+"&first_last_name="+first_last_name+"&second_last_name="+second_last_name+"&phone="+phone);
+							
+							date.onreadystatechange = function(){
+										
+								if(date.readyState == 4 && date.status == 200){
+										
+									date_response = date.responseText;
+									var objet_date = JSON.parse(date_response);	
+									console.log(objet_date);
+									
+									//EMPIZA TABLA 
+									
+									let head_table = document.getElementById('head_table');
+									let body_table = document.getElementById('body_table');
+									body_table.innerHTML = "";
+									let h_cell_name = "<th>NOMBRE</th>";
+									let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";
+									let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";
+									let h_cell_phone = "<th>TELEFONO</th>";
+
+									head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+"</tr>";
+
+									var cantidad = objet_date.length;
+									
+									for (var i = 0; i < cantidad; i++) {
+									  
+										let t_cell_name = "<td>"+objet_date[i].name_tbl+"</td>";
+										let t_cell_first_ln = "<td>"+objet_date[i].first_last_name_tbl+"</td>";
+										let t_cell_second_ln = "<td>"+objet_date[i].second_last_name_tbl+"</td>";
+										let t_cell_phone = "<td>"+objet_date[i].phone_tbl+"</td>";
+										
+										body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+"</tr>";
+									}
+								}
+							}
+						}
+
+					</script>
+				</div>
+			</div>
+		</div>
+	</body>
+	
+</html>

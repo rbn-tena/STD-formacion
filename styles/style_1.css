@@ -1,0 +1,38 @@
+/* CSS Document */
+
+body {
+margin:0px 0px 0px 0px auto;
+padding:0px 0px 0px 0px;
+background-image: url("imagenes/fondo.png");
+}
+
+#contenedor{
+background-image: url("imagenes/wash-black-30.png");
+width:820px;
+margin:0px auto;
+padding:0px 0px 5px 0px;
+}
+
+#fondo {
+background-color: #f9f4f2;
+width:800px;
+margin:0px auto;
+}
+
+#contenido {
+text-align: center;
+font: bold 18px Tahoma, Geneva, sans-serif;
+width: 800px;
+margin: 5px auto;
+padding:5px 5px 5px 5px;
+display: block;
+}
+
+.button {
+	border: 5px solid #ff8100;
+	padding: 5px;
+	border-radius: 10px;
+	width: 770px;
+	margin: 5px 5px 5px px auto;
+}
+

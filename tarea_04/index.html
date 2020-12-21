@@ -1,0 +1,124 @@
+<html>
+	<head>
+		
+		<title>TAREA 4</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+		<meta http-equiv="content-style-type" content="text/css">
+		<link href="../styles/style_1.css" type="text/css" rel="stylesheet" /><!-- ./para dentro de la carpeta en la que esta ../para retroceder a la anterior ../../para retroceder dos carpetas-->
+
+	</head>
+	
+	<body>
+		<div id= "fondo">
+			<div id= "contenido">
+				<div class= "contenedor">
+					<!--<form action="php_inicial_01-003.php" method="POST" id="" name="" onsubmit="return validation()"  NO CONSIGO HACERLO CON FROM   >-->
+						<label type="label">Nombre:</label>
+						<input type="text" name="name" id="name" value=""></input><!--/valor nombre/-->
+						<br/>
+						<label type="label">Primer apellido:</label>
+						<input type="text" name="first_last_name" id="first_last_name" value=""></input><!--/valor primer apellido/-->
+						<br/>
+						<label type="label">Segundo apellido:</label>
+						<input type="text" name="second_last_name" id="second_last_name" value=""></input><!--/valor segundo apellido/-->
+						<br/>
+						<label type="label">Telefono:</label>
+						<input type="text" name="phone" id="phone" value=""></input><!--/valor telefono/-->
+						<br/>
+						<button onclick="validation()">ENVIAR</button><!--/boton manda a comprobar/-->
+					<!--</form>-->
+					
+					<div id="div_table"><!--/div donde ira la tabla/-->
+						<table border="1" width=100%;><!--/borde de 1px y 100% de ancho/-->
+							<thead id="head_table">
+								<!--/comienza la cabecera/-->
+							</thead>
+							<tbody id="body_table">
+								<!--/comienza el cuerpo de la tabla/-->
+							</tbody>
+						</table>
+					</div>
+
+					<script type="text/javascript" languaje="javascript">
+						function validation() {// metodo de validadcion
+							if ( document.getElementById("name").value == null || document.getElementById("name").value.length == 0 || document.getElementById("name").value.length > 40 || /^\s+$/.test(document.getElementById("name").value) ) {//si nombre no tiene valor||es 0||es mayor a 40||o esta compuesta de caracteres en blanco
+								alert('[ERROR] El campo debe tener un valor de entre 1 y 40 caracteres');//aviso
+ 								return false;//devuelve falso
+ 							}	
+							
+							else if ( document.getElementById("first_last_name").value == null || document.getElementById("first_last_name").value.length == 0 || document.getElementById("first_last_name").value.length > 40 || /^\s+$/.test(document.getElementById("first_last_name").value) ) {//si nombre no tiene valor||es 0||es mayor a 40||o esta compuesta de caracteres en blanco
+								alert('[ERROR] El campo debe tener un valor de entre 1 y 40 caracteres, y solo se admiten letras');//aviso
+ 								return false;//devuelve falso
+							}
+
+							else if( document.getElementById("second_last_name").value == null || document.getElementById("second_last_name").value.length == 0 || document.getElementById("second_last_name").value.length > 40 || /^\s+$/.test(document.getElementById("second_last_name")) ) {//si nombre no tiene valor||es 0||es mayor a 40||o esta compuesta de caracteres en blanco
+								alert('[ERROR] El campo debe tener un valor de entre 1 y 40 caracteres, y solo se admiten letras');//aviso
+ 								return false;//devuelve falso
+							}
+							 
+							 else if ( isNaN(document.getElementById("phone").value) || document.getElementById("phone").value.length !=9) {//si es diferente a numeros||y diferente a nueve caracteres
+							    alert('[ERROR] El campo debe ser 9 numeros.');//aviso
+							    return false;//devuelve falso
+							}
+							  return send_date();//llama al metodo de envio
+						}
+					</script>
+
+					<script type="text/javascript" languaje="javascript">
+						
+						function send_date(){//metodo de envio
+							
+							
+							var name = document.getElementById("name").value;//adquiere valor nombre
+							var first_last_name = document.getElementById("first_last_name").value;//adquiere valor primer apellido
+							var second_last_name = document.getElementById("second_last_name").value;//adquiere valor segundo apellido
+							var phone = document.getElementById("phone").value;//adquiere valor telefono
+
+							var date = new  XMLHttpRequest();//nuevo objeto tipo XMLHttpRequest
+							date.open("POST", "php_inicial_01-004.php", true);//variable.abre_solicitud_diciendo_tipo("metodo"(GET/POST),"localizacion","asincrono"
+							date.setRequestHeader("Content-type","application/x-www-form-urlencoded");//variable.estableceSolicitudEncabezado("tipo_de-medio", ·application/x-www-form-urlencoded
+							date.send("name="+name+"&first_last_name="+first_last_name+"&second_last_name="+second_last_name+"&phone="+phone);//variable.envia("nombre_variable_dentro_objeto"+valor_que_corresponde_con_el_de_variable_creada_antes_en_este_caso)
+							
+							date.onreadystatechange = function(){//función que se ejecutará cuando cambie readyState.
+										
+								if(date.readyState == 4 && date.status == 200){//si(solicitud_finalizada_y_respuesta_lista && ok)
+										
+									date_response = date.responseText;//pasa la respuesta a texto
+									var objet_date = JSON.parse(date_response);	//creamos un objeto con el Json
+																		
+									//EMPIEZA TABLA 
+									
+									let head_table = document.getElementById('head_table');//convierte el encabezado en variable
+									let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
+									body_table.innerHTML = "";//borrado para evitar duplicados
+									let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
+									let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
+									let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
+									let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
+
+									head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+"</tr>";//inserta el encabezado
+
+									var cantidad = objet_date.length;//cantidad de lineas a introducir
+									
+									for (var i = 0; i < cantidad; i++) {//bucle para insertar las lineas
+									  
+										let t_cell_name = "<td>"+objet_date[i].name_tbl+"</td>";//celda nombre
+										let t_cell_first_ln = "<td>"+objet_date[i].first_last_name_tbl+"</td>";//celda 1e apellido
+										let t_cell_second_ln = "<td>"+objet_date[i].second_last_name_tbl+"</td>";//celda 2o apellido
+										let t_cell_phone = "<td>"+objet_date[i].phone_tbl+"</td>";//celda telefono
+										
+										body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+"</tr>";//introduce linea en cuerpo de la tabla
+									}
+								}
+							}
+						}
+					</script>
+				</div>
+			</div>
+		</div>
+	</body>
+	
+</html>
+<!--https://uniwebsidad.com/libros/javascript/capitulo-7/validacion
