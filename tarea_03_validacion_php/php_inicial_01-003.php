@@ -1,9 +1,11 @@
 <?php
-	$server = "localhost";
+	/*$server = "localhost";
 	$user = "root";
 	$pass = "";
 	$BD = "stdcore_practicas";
-	$conexion = mysqli_connect($server,$user,$pass,$BD);
+	$conexion = mysqli_connect($server,$user,$pass,$BD);*/
+	
+	include 'db_conf.php';
 	
 	//si es diferente a vacio
 	if( !empty($_POST) ){
@@ -29,62 +31,57 @@
 												$phone = (int)$_POST['phone'];	
 																				
 												$sql = "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')";
-												$error = "datos introducidos correctamente";
+												$error = 'datos introducidos correctamente';
 												
-												if (!mysqli_query($conexion, $sql)){$error = "no es posible insertar los datos";exit;}
+												if (!mysqli_query($conexion, $sql)){$error = 'no es posible insertar los datos';exit;}
 											}
 											else{
-												$error = "Campo telefono deben ser numeros";
+												$error = 'Campo telefono deben ser numeros';
 											}
 										}
 										else{
-											$error = "Campo telefono deben ser 9 cifras";
+											$error = 'Campo telefono deben ser 9 cifras';
 										}
 									}
 									else{
-										$error = "Campo telefono no puede estar vacio";
+										$error = 'Campo telefono no puede estar vacio';
 									}
 								}
 								else{
-									$error = "Segundo apellido de maximo 40 caracteres";
+									$error = 'Segundo apellido de maximo 40 caracteres';
 								}
 							}
 							else{
-								$error = "Campo segundo apellido no puede estar vacio";
+								$error = 'Campo segundo apellido no puede estar vacio';
 							}	
 						}
 						else{
-							$error[] = "Primer apellido de maximo 40 caracteres";
+							$error[] = 'Primer apellido de maximo 40 caracteres';
 						}
 					}
 					else{
-						$error[] = "Campo primer apellido no puede estar vacio";
+						$error[] = 'Campo primer apellido no puede estar vacio';
 					}
 				}
 				else{
-					$error[] = "Nombre de maximo 40 caracteres";
+					$error[] = 'Nombre de maximo 40 caracteres';
 				}
 			}
 			else{
-				$error[] = "Campo nombre no puede estar vacio";
+				$error[] = 'Campo nombre no puede estar vacio';
 			}
 		}
 		else{
-			$error[] = "No se han recibido todos los datos requeridos";
+			$error[] = 'No se han recibido todos los datos requeridos';
 		}
 	}
-	else{ $error[]= "No se han enviado datos";	
+	else{ $error[]= 'No se han enviado datos';	
 	}
 		
-	$sql = "SELECT * FROM `php_inicial_ruben` ";
+	$sql = 'SELECT * FROM `php_inicial_ruben` ';
 		
 	$resultado=mysqli_query($conexion, $sql);
 	
-	//$table = new stdClass();
-
-	//$table 
-	
-	//while ($fila = mysqli_fetch_row($resultado)) {
 	while ($fila = mysqli_fetch_array($resultado)) {
 		
 		$name_tbl = $fila[0];
@@ -92,7 +89,7 @@
 		$second_last_name_tbl = $fila[2];
 		$phone_tbl = $fila[3];
 		
-		$table[] = array("name_tbl"=>$name_tbl,"first_last_name_tbl"=>$first_last_name_tbl,"second_last_name_tbl"=>$second_last_name_tbl,"phone_tbl"=>$phone_tbl);
+		$table[] = array('name_tbl'=>$name_tbl,'first_last_name_tbl'=>$first_last_name_tbl,'second_last_name_tbl'=>$second_last_name_tbl,'phone_tbl'=>$phone_tbl);
 	}
 	$table[] = $error;
 	$json_table =json_encode($table);
