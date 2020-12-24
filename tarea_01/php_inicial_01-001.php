@@ -1,10 +1,6 @@
 <?php
 
-	$server = "localhost";
-	$user = "root";
-	$pass = "";
-	$BD = "stdcore_practicas";
-	$conexion = mysqli_connect($server,$user,$pass,$BD);
+	include '../db_conf.php';
 	
 	$name= 'Antonio';
 	$first_last_name ='Garcia';
@@ -20,21 +16,7 @@
 		
 	$resultado = mysqli_query($conexion, $sql);
 		
-	echo ('<table border = "1">');
-		echo ('<tr>');
-			echo ('<th>');
-				echo("Nombre:");
-			echo ('</th>');
-			echo ('<th>');
-				echo("Primer Apellido:");
-			echo ('</th>');
-			echo ('<th>');
-				echo("Segundo Apellido:");
-			echo ('</th>');
-			echo ('<th>');
-				echo("Segundo Apellido:");
-			echo ('</th>');	
-		echo ('</tr>');
+	echo ('<table border=1><tr><th>NOMBRE:</th><th>PRIMNER APELLIDO:</th><th>SEGUNDO APELLIDO:</th><th>TELEFONO:</th></tr>');
 		
 		while ($fila = mysqli_fetch_row($resultado)) {
 					
@@ -43,20 +25,7 @@
 			$second_last_name = $fila[2];
 			$phone = $fila[3];
 				
-			echo('<tr>');	
-				echo ('<td>');
-					echo ($name);
-				echo ('</td>');
-				echo ('<td>');
-					echo ($first_last_name);
-				echo ('</td>');
-				echo ('<td>');
-					echo ($second_last_name);
-				echo ('</td>');
-				echo ('<td>');
-					echo ($phone);
-				echo ('</td>');
-			echo('</tr>');
+			echo("<tr><td>${name}</td><td>${first_last_name}</td><td>${second_last_name}</td><td>${phone}</td></tr>");
 		}
 	echo ('</table>');	
 ?>	

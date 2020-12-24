@@ -1,9 +1,5 @@
 <?php
-	$server = "localhost";
-	$user = "root";
-	$pass = "";
-	$BD = "stdcore_practicas";
-	$conexion = mysqli_connect($server,$user,$pass,$BD);
+	include '../db_conf.php';
 	
 	$name= $_POST['name'];
 	$first_last_name = $_POST['first_last_name'];

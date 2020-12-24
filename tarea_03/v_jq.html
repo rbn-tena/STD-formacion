@@ -1,7 +1,7 @@
 <html>
 	<head>
 		
-		<title>TAREA 3 CON VALIDACION JQUERY</title>
+		<title>TAREA 3 CON JQUERY</title>
 
 		<meta http-equiv='content-type' content='text/html; charset=utf-8'>
 		<meta http-equiv='content-type' content='application/xhtml+xml; charset=utf-8'>
@@ -16,24 +16,26 @@
 				<div class= "contenedor">
 					<form id="form"  method="POST">
 						<label for="name">Nombre:</label>
-						<input type="text" name="name" id="name"> </input><!--/valor nombre/-->
+						<input type="text" name="name" id="name" required> </input><!--/valor nombre/-->
 						<br/>
 						<label for="first_last_name">Primer apellido:</label>
-						<input type="text" name="first_last_name" id="first_last_name"> </input><!--/valor primer apellido/-->
+						<input type="text" name="first_last_name" id="first_last_name" required> </input><!--/valor primer apellido/-->
 						<br/>
 						<label for="second_last_name">Segundo apellido:</label>
-						<input type="text" name="second_last_name" id="second_last_name"> </input><!--/valor segundo apellido/-->
+						<input type="text" name="second_last_name" id="second_last_name" required> </input><!--/valor segundo apellido/-->
 						<br/>
 						<label for="phone">Telefono:</label>
-						<input type="text" name="phone" id="phone" ></input><!--/valor telefono/-->
+						<input type="text" name="phone" id="phone" required></input><!--/valor telefono/-->
 						<br/>
-						<input class="submit" type="submit" value="ENVIAR" action="php_inicial_01-003.php"><!--/boton manda a comprobar/-->
+						<input class="submit" type="submit" value="ENVIAR" required><!--/boton manda a comprobar/--><!--action="php_inicial_01-0032.php"-->
 					</form>
 
 					<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 					<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 					<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-
+					
+					<div id="div_log"></div>
+					
 					<div id="div_table"><!--/div donde ira la tabla/-->
 						<table border="1" width=100%;><!--/borde de 1px y 100% de ancho/-->
 							<thead id="head_table">
@@ -44,7 +46,9 @@
 							</tbody>
 						</table>
 					</div>
-
+					
+					
+					
 					<script type="text/javascript" languaje="javascript">
 						$(document).ready(function() {
 						  	$("#form").validate({
@@ -52,7 +56,7 @@
 						      		name: {
 						        		required: true,
 						        		minlength: 3,
-						        		maxlength: 40
+						        		maxlength: 10
 						      		},
 							      	first_last_name: {
 							        	required: true,
@@ -107,38 +111,40 @@
 										
 						function get_data(data){//metodo de recepcion
 							
-							console.log("status = "+data.status);
+							//data_response = data.responseText;//pasa la respuesta a texto ESTO LO PETA TODO
 							console.log(data);
-				
-									//data_response = data.responseText;//pasa la respuesta a texto ESTO LO PETA TODO
-									var objet_data = JSON.parse(data);	//creamos un objeto con el Json
-													console.log(objet_data);					
-									//EMPIEZA TABLA 
-									
-									let head_table = document.getElementById('head_table');//convierte el encabezado en variable
-									let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
-									body_table.innerHTML = "";//borrado para evitar duplicados
-									let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
-									let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
-									let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
-									let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
+							var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+							console.log(objet_data);	
+							console.log(objet_data);				
+							
+							//EMPIEZA TABLA 
+								
+							let head_table = document.getElementById('head_table');//convierte el encabezado en variable
+							let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
+							body_table.innerHTML = "";//borrado para evitar duplicados
+							let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
+							let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
+							let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
+							let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
 
-									head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+"</tr>";//inserta el encabezado
+							head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+"</tr>";//inserta el encabezado
 
-									var cantidad = objet_data.length;//cantidad de lineas a introducir
+							var amount = objet_data.length;//cantidad de lineas a introducir
 									
-									for (var i = 0; i < cantidad; i++) {//bucle para insertar las lineas
+							for (var i = 0; i < amount-1; i++) {//bucle para insertar las lineas
 									  
-										let t_cell_name = "<td>"+objet_data[i].name_tbl+"</td>";//celda nombre
-										let t_cell_first_ln = "<td>"+objet_data[i].first_last_name_tbl+"</td>";//celda 1e apellido
-										let t_cell_second_ln = "<td>"+objet_data[i].second_last_name_tbl+"</td>";//celda 2o apellido
-										let t_cell_phone = "<td>"+objet_data[i].phone_tbl+"</td>";//celda telefono
+								let t_cell_name = "<td>"+objet_data[i].name_tbl+"</td>";//celda nombre
+								let t_cell_first_ln = "<td>"+objet_data[i].first_last_name_tbl+"</td>";//celda 1e apellido
+								let t_cell_second_ln = "<td>"+objet_data[i].second_last_name_tbl+"</td>";//celda 2o apellido
+								let t_cell_phone = "<td>"+objet_data[i].phone_tbl+"</td>";//celda telefono
 										
-										body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+"</tr>";//introduce linea en cuerpo de la tabla
-									}
-								}
-							//}
-					//	}
+								body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+"</tr>";//introduce linea en cuerpo de la tabla
+							}
+							
+							console.log(objet_data[amount-1]);
+							console.log(amount-1);	
+							div_log.innerHTML = objet_data[amount-1];	
+						}
 					</script>
 				</div>
 			</div>
