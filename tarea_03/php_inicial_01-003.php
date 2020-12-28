@@ -5,29 +5,55 @@
 	if( !empty($_POST) ){
 		// Comprobar si llegaron los campos requeridos
 		if( isset($_POST['name'], $_POST['first_last_name'], $_POST['second_last_name'], $_POST['phone'])){
+			
 			//comprobar nombre
 			if( !empty($_POST['name']) ){
 				if ( strlen($_POST['name']) < 40 ){
 					$name= $_POST['name'];
-					//comprobar primer apellido
-					if( !empty($_POST['first_last_name']) ){
-						if ( strlen($_POST['first_last_name']) < 40 ){	
-							$first_last_name = $_POST['first_last_name'];
-							//comprobar segundo apellido
-							if( !empty($_POST['second_last_name']) ){
-								if ( strlen($_POST['second_last_name']) < 40 ){	
-									$second_last_name = $_POST['second_last_name'];
+				}
+				else{
+					$error[] = 'Nombre de maximo 40 caracteres';
+				}
+			}
+			else{
+				$error[] = 'Campo nombre no puede estar vacio';
+			}		
+			
+			//comprobar primer apellido
+			if( !empty($_POST['first_last_name']) ){
+				if ( strlen($_POST['first_last_name']) < 40 ){	
+					$first_last_name = $_POST['first_last_name'];
+				}
+				else{
+					$error[] = 'Primer apellido de maximo 40 caracteres';
+				}	
+			}
+			else{
+				$error[] = 'Campo primer apellido no puede estar vacio';
+			}		
+							
+			//comprobar segundo apellido
+			if( !empty($_POST['second_last_name']) ){
+				if ( strlen($_POST['second_last_name']) < 40 ){	
+					$second_last_name = $_POST['second_last_name'];
+				}
+				else{
+					$error = 'Segundo apellido de maximo 40 caracteres';
+				}	
+			}
+			else{
+				$error = 'Campo segundo apellido no puede estar vacio';
+			}	
+									
 									//comprobar telefono
 									if( !empty($_POST['phone']) ){
 										if ( strlen($_POST['phone']) <= 9 &&  strlen($_POST['phone']) >= 9){
+											
 											if ( ctype_digit($_POST['phone'])){
 							
 												$phone = (int)$_POST['phone'];	
 																				
-												$sql = "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')";
-												$error = 'datos introducidos correctamente';
 												
-												if (!mysqli_query($conexion, $sql)){$error = 'no es posible insertar los datos';exit;}
 											}
 											else{
 												$error = 'Campo telefono deben ser numeros';
@@ -40,30 +66,12 @@
 									else{
 										$error = 'Campo telefono no puede estar vacio';
 									}
-								}
-								else{
-									$error = 'Segundo apellido de maximo 40 caracteres';
-								}
-							}
-							else{
-								$error = 'Campo segundo apellido no puede estar vacio';
-							}	
-						}
-						else{
-							$error[] = 'Primer apellido de maximo 40 caracteres';
-						}
-					}
-					else{
-						$error[] = 'Campo primer apellido no puede estar vacio';
-					}
-				}
-				else{
-					$error[] = 'Nombre de maximo 40 caracteres';
-				}
-			}
-			else{
-				$error[] = 'Campo nombre no puede estar vacio';
-			}
+								
+							
+						
+					
+				
+			
 		}
 		else{
 			$error[] = 'No se han recibido todos los datos requeridos';
@@ -71,6 +79,11 @@
 	}
 	else{ $error= 'No se han enviado datos';	
 	}
+	
+	$sql = "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')";
+	$error = 'datos introducidos correctamente';
+												
+	if (!mysqli_query($conexion, $sql)){$error = 'no es posible insertar los datos';exit;}
 		
 	$sql = 'SELECT * FROM `php_inicial_ruben` ';
 		
