@@ -69,7 +69,7 @@
 			$error[] = 'No se han recibido todos los datos requeridos';
 		}
 	}
-	else{ $error[]= 'No se han enviado datos';	
+	else{ $error= 'No se han enviado datos';	
 	}
 		
 	$sql = 'SELECT * FROM `php_inicial_ruben` ';
