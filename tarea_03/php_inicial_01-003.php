@@ -1,5 +1,6 @@
 <?php
 	include '../db_conf.php';
+	$insert=false;
 	
 	//si es diferente a vacio
 	if( !empty($_POST) ){
@@ -12,11 +13,13 @@
 					$name= $_POST['name'];
 				}
 				else{
-					$error[] = 'Nombre de maximo 40 caracteres';
+					$error[] = '<p>Nombre de maximo 40 caracteres</p>';
+					$insert +=1;
 				}
 			}
 			else{
-				$error[] = 'Campo nombre no puede estar vacio';
+				$error[] = '<p>Campo nombre no puede estar vacio</p>';
+				$insert +=1;
 			}		
 			
 			//comprobar primer apellido
@@ -25,11 +28,13 @@
 					$first_last_name = $_POST['first_last_name'];
 				}
 				else{
-					$error[] = 'Primer apellido de maximo 40 caracteres';
+					$error[] = '<p>Primer apellido de maximo 40 caracteres</p>';
+					$insert +=1;
 				}	
 			}
 			else{
-				$error[] = 'Campo primer apellido no puede estar vacio';
+				$error[] = '<p>Campo primer apellido no puede estar vacio</p>';
+				$insert +=1;
 			}		
 							
 			//comprobar segundo apellido
@@ -38,52 +43,55 @@
 					$second_last_name = $_POST['second_last_name'];
 				}
 				else{
-					$error = 'Segundo apellido de maximo 40 caracteres';
+					$error[] = '<p>Segundo apellido de maximo 40 caracteres</p>';
+					$insert +=1;
 				}	
 			}
 			else{
-				$error = 'Campo segundo apellido no puede estar vacio';
+				$error[] = '<p>Campo segundo apellido no puede estar vacio</p>';
+				$insert +=1;
 			}	
 									
 									//comprobar telefono
-									if( !empty($_POST['phone']) ){
-										if ( strlen($_POST['phone']) <= 9 &&  strlen($_POST['phone']) >= 9){
-											
-											if ( ctype_digit($_POST['phone'])){
+			if( !empty($_POST['phone']) ){
+				if ( strlen($_POST['phone']) == 9){
+					if ( ctype_digit($_POST['phone'])){
 							
-												$phone = (int)$_POST['phone'];	
+						$phone = (int)$_POST['phone'];	
 																				
-												
-											}
-											else{
-												$error = 'Campo telefono deben ser numeros';
-											}
-										}
-										else{
-											$error = 'Campo telefono deben ser 9 cifras';
-										}
-									}
-									else{
-										$error = 'Campo telefono no puede estar vacio';
-									}
-								
-							
-						
-					
+					}
+					else{
+						$error[] = '<p>Campo telefono deben ser numeros</p>';
+						$insert +=1;
+					}
+				}
+				else{
+					$error[] = '<p>Campo telefono deben ser 9 cifras</p>';
+					$insert +=1;
+				}
+			}
+			else{
+				$error []= '<p>Campo telefono no puede estar vacio</p>';
+				$insert +=1;
+			}
 				
-			
 		}
 		else{
-			$error[] = 'No se han recibido todos los datos requeridos';
+			$error[] = '<p>No se han recibido todos los datos requeridos</p>';
+			$insert +=1;
 		}
 	}
-	else{ $error= 'No se han enviado datos';	
+	else{ 
+		$error[]= '<p>No se han enviado datos</p>';
+		$insert +=1;	
 	}
 	
-	$sql = "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')";
-	$error = 'datos introducidos correctamente';
-												
-	if (!mysqli_query($conexion, $sql)){$error = 'no es posible insertar los datos';exit;}
+	if($insert ==0){
+		$sql = "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')";
+		$error = '<p>Datos introducidos correctamente</p>';
+													
+		if (!mysqli_query($conexion, $sql)){$error = '<p>No es posible insertar los datos</p>';exit;}
+	}
 		
 	$sql = 'SELECT * FROM `php_inicial_ruben` ';
 		

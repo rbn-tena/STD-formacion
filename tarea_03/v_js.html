@@ -84,6 +84,7 @@
 										
 								if(data.readyState == 4 && data.status == 200){//si(solicitud_finalizada_y_respuesta_lista && ok)
 										
+									console.log(data);	
 									data_response = data.responseText;//pasa la respuesta a texto
 									var objet_data = JSON.parse(data_response);	//creamos un objeto con el Json
 																		
