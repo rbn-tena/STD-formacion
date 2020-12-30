@@ -6,7 +6,7 @@
 		<meta http-equiv='content-type' content='text/html; charset=utf-8'>
 		<meta http-equiv='content-type' content='application/xhtml+xml; charset=utf-8'>
 		<meta http-equiv='content-style-type' content='text/css'>
-		<link href="./style_02.css" type="text/css" rel="stylesheet" /><!-- ./para dentro de la carpeta en la que esta ../para retroceder a la anterior ../../para retroceder dos carpetas-->
+		<!--<link href="./style_02.css" type="text/css" rel="stylesheet" /><!-- ./para dentro de la carpeta en la que esta ../para retroceder a la anterior ../../para retroceder dos carpetas-->
 
 	</head>
 	
@@ -14,37 +14,70 @@
 		<form id="form"  method="POST">
 			<p>
 				<label for="name">Nombre:</label>
-				<input type="text" name="name" id="name" required> </input>
+				<input type="text" name="name" id="name" >
 			</p>	
 			<p>
 				<label for="first_last_name">Primer apellido:</label>
-				<input type="text" name="first_last_name" id="first_last_name" required> </input>
+				<input type="text" name="first_last_name" id="first_last_name" >
 			</p>
 			<p>
 				<label for="second_last_name">Segundo apellido:</label>
-				<input type="text" name="second_last_name" id="second_last_name" required> </input>
+				<input type="text" name="second_last_name" id="second_last_name" >
 			</p>
 			<p>
 				<label for="document_type ">Documento de identidad</label>
-				<input type="radio" name="document" id="dni" required></input>	<!--mismo name para siempre uno-->
-				<input type="radio" name="document" id="el_otro" required></input><!--mismo name para siempre uno-->
-				<input type="text" name="identification_string" id="identification_string" required></input>
+				<input type="radio" name="document" id="dni" value="DNI" ><label for="dni">DNI</label><!--mismo name para siempre uno-->
+				<input type="radio" name="document" id="tie" value = "TIE" ><label for="tie">TIE</label>
+				<!--mismo name para siempre uno-->
+				<input type="text" name="identification_string" id="identification_string" >
 			</p>
 			<p>
 				<label for="birthdate">Fecha de nacimiento:</label>	
-				<input type="text" name="birthdate" id="birthdate" required></input>
+				<input type="text" name="birthdate" id="birthdate" >
 			</p>
 			<p>
 				<label for="phone">Telefono:</label>	
-				<input type="text" name="phone" id="phone" required></input>
+				<input type="tel" name="phone" id="phone" >
 			</p>
 			<p>
 				<label for="email">Email:</label>	
-				<input type="text" name="email" id="email" required></input>
+				<input type="email" name="email" id="email" >
 			</p>
+				<input class="submit" type="submit" value="ENVIAR" ><!--/boton manda a comprobar/-->
 			<p>
-				<input class="submit" type="submit" value="ENVIAR" required><!--/boton manda a comprobar/-->
 			</p>
 		</form>
+		
+		<div id="log"></div>
+		
 	</body>
+	
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<script>
+	
+		$("#form").submit(function(){
+			var data_form=$(this).serialize(); 
+			console.log(data_form);
+			$.post("php.php", data_form, get_data);
+		
+			return false;
+		});
+		
+		function get_data(data){
+		
+			console.log(data);
+			var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+			console.log(objet_data);
+			log.innerHTML += "<p>Nombre >>> "+objet_data[0].name+"</p>";	
+			log.innerHTML += "<p>P. apellido >>> "+objet_data[0].first_last_name+"</p>";
+			log.innerHTML += "<p>S. apellido >>> "+objet_data[0].second_last_name+"</p>";
+			log.innerHTML += "<p>Tipo de documento >>> "+objet_data[0].document+"</p>";
+			log.innerHTML += "<p>identificación >>> "+objet_data[0].identification_string+"</p>";	
+			log.innerHTML += "<p>F. nacimiento >>> "+objet_data[0].birthdate+"</p>";	
+			log.innerHTML += "<p>Telefono >>> "+objet_data[0].phone+"</p>";
+			log.innerHTML += "<p>Email >>> "+objet_data[0].email+"</p>";	
+		}					
+	</script>
+	
 </html>

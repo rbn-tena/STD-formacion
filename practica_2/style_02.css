@@ -24,8 +24,16 @@ input {
   margin-top: 10px;
 }
 
+input[type="radio"] + label {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  width: 10px;
+  margin-top: 10px;
+}
+
 label {
-  width: 300px;
+  width: 100%;
   font-weight: bold;
   display: inline-block;
   margin-top: 20px;
