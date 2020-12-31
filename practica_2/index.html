@@ -59,7 +59,7 @@
 		$("#form").submit(function(){
 			var data_form=$(this).serialize(); 
 			console.log(data_form);
-			$.post("php.php", data_form, get_data);
+			$.post("validation.php", data_form, get_data);
 		
 			return false;
 		});
@@ -69,14 +69,14 @@
 			console.log(data);
 			var objet_data = JSON.parse(data);	//creamos un objeto con el Json
 			console.log(objet_data);
-			log.innerHTML += "<p>Nombre >>> "+objet_data[0].name+"</p>";	
-			log.innerHTML += "<p>P. apellido >>> "+objet_data[0].first_last_name+"</p>";
+			log.innerHTML += "<p>Nombre >>> "+objet_data+"</p>";	
+			/*log.innerHTML += "<p>P. apellido >>> "+objet_data[0].first_last_name+"</p>";
 			log.innerHTML += "<p>S. apellido >>> "+objet_data[0].second_last_name+"</p>";
 			log.innerHTML += "<p>Tipo de documento >>> "+objet_data[0].document+"</p>";
 			log.innerHTML += "<p>identificación >>> "+objet_data[0].identification_string+"</p>";	
 			log.innerHTML += "<p>F. nacimiento >>> "+objet_data[0].birthdate+"</p>";	
 			log.innerHTML += "<p>Telefono >>> "+objet_data[0].phone+"</p>";
-			log.innerHTML += "<p>Email >>> "+objet_data[0].email+"</p>";	
+			log.innerHTML += "<p>Email >>> "+objet_data[0].email+"</p>";	*/
 		}					
 	</script>
 	
