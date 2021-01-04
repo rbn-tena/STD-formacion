@@ -11,42 +11,57 @@
 	</head>
 	
 	<body>
-		<form id="form"  method="POST">
-			<p>
-				<label for="name">Nombre:</label>
-				<input type="text" name="name" id="name" >
-			</p>	
-			<p>
-				<label for="first_last_name">Primer apellido:</label>
-				<input type="text" name="first_last_name" id="first_last_name" >
-			</p>
-			<p>
-				<label for="second_last_name">Segundo apellido:</label>
-				<input type="text" name="second_last_name" id="second_last_name" >
-			</p>
-			<p>
-				<label for="document_type ">Documento de identidad</label>
-				<input type="radio" name="document" id="dni" value="DNI" ><label for="dni">DNI</label><!--mismo name para siempre uno-->
-				<input type="radio" name="document" id="tie" value = "TIE" ><label for="tie">TIE</label>
-				<!--mismo name para siempre uno-->
-				<input type="text" name="identification_string" id="identification_string" >
-			</p>
-			<p>
-				<label for="birthdate">Fecha de nacimiento:</label>	
-				<input type="text" name="birthdate" id="birthdate" >
-			</p>
-			<p>
-				<label for="phone">Telefono:</label>	
-				<input type="tel" name="phone" id="phone" >
-			</p>
-			<p>
-				<label for="email">Email:</label>	
-				<input type="email" name="email" id="email" >
-			</p>
-				<input class="submit" type="submit" value="ENVIAR" ><!--/boton manda a comprobar/-->
-			<p>
-			</p>
-		</form>
+		<button onclick="create()">NUEVO</button>
+		<button onclick="read()">VER TODOS</button>
+		<div id= "create" style="display:none">
+			<form id="form"  method="POST">
+				<p>
+					<label for="name">Nombre:</label>
+					<input type="text" name="name" id="name" >
+				</p>	
+				<p>
+					<label for="first_last_name">Primer apellido:</label>
+					<input type="text" name="first_last_name" id="first_last_name" >
+				</p>
+				<p>
+					<label for="second_last_name">Segundo apellido:</label>
+					<input type="text" name="second_last_name" id="second_last_name" >
+				</p>
+				<!--<p>
+					<label for="document_type ">Documento de identidad</label>
+					<input type="radio" name="document" id="dni" value="DNI" ><label for="dni">DNI</label><!--mismo name para siempre uno--><!--
+					<input type="radio" name="document" id="tie" value = "TIE" ><label for="tie">TIE</label>
+					<!--mismo name para siempre uno--><!--
+					<input type="text" name="identification_string" id="identification_string" >
+				</p>
+				<p>
+					<label for="birthdate">Fecha de nacimiento:</label>	
+					<input type="text" name="birthdate" id="birthdate" >
+				</p>-->
+				<p>
+					<label for="phone">Telefono:</label>	
+					<input type="tel" name="phone" id="phone" >
+				</p>
+				<p>
+					<label for="email">Email:</label>	
+					<input type="email" name="email" id="email" >
+				</p>
+				<p>
+					<input class="submit" type="submit" value="ENVIAR" ><!--/boton manda a comprobar/-->
+				</p>
+			</form>
+		</div>
+		
+		<div id="div_table" style="display:none"><!--/div donde ira la tabla/-->
+			<table border="1" width=100%;><!--/borde de 1px y 100% de ancho/-->
+				<thead id="head_table">
+					<!--/comienza la cabecera/-->
+				</thead>
+				<tbody id="body_table">
+					<!--/comienza el cuerpo de la tabla/-->
+				</tbody>
+			</table>
+		</div>
 		
 		<div id="log"></div>
 		
@@ -56,28 +71,81 @@
 	
 	<script>
 	
-		$("#form").submit(function(){
-			var data_form=$(this).serialize(); 
-			console.log(data_form);
-			$.post("validation.php", data_form, get_data);
+		function create() {
+			
+			document.getElementById('create').style.display ='inherit';
 		
-			return false;
-		});
 		
-		function get_data(data){
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				$.post("validation.php", data_form, get_data);
+			
+				return false;
+			});
+			
+			function get_data(data){
+			
+				console.log(data);
+				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+				console.log(objet_data);
+				log.innerHTML += "<p>"+objet_data+"</p>";	
+				/*log.innerHTML += "<p>P. apellido >>> "+objet_data[0].first_last_name+"</p>";
+				log.innerHTML += "<p>S. apellido >>> "+objet_data[0].second_last_name+"</p>";
+				log.innerHTML += "<p>Tipo de documento >>> "+objet_data[0].document+"</p>";
+				log.innerHTML += "<p>identificación >>> "+objet_data[0].identification_string+"</p>";	
+				log.innerHTML += "<p>F. nacimiento >>> "+objet_data[0].birthdate+"</p>";	
+				log.innerHTML += "<p>Telefono >>> "+objet_data[0].phone+"</p>";
+				log.innerHTML += "<p>Email >>> "+objet_data[0].email+"</p>";	*/
+			}
+		}
 		
-			console.log(data);
-			var objet_data = JSON.parse(data);	//creamos un objeto con el Json
-			console.log(objet_data);
-			log.innerHTML += "<p>Nombre >>> "+objet_data+"</p>";	
-			/*log.innerHTML += "<p>P. apellido >>> "+objet_data[0].first_last_name+"</p>";
-			log.innerHTML += "<p>S. apellido >>> "+objet_data[0].second_last_name+"</p>";
-			log.innerHTML += "<p>Tipo de documento >>> "+objet_data[0].document+"</p>";
-			log.innerHTML += "<p>identificación >>> "+objet_data[0].identification_string+"</p>";	
-			log.innerHTML += "<p>F. nacimiento >>> "+objet_data[0].birthdate+"</p>";	
-			log.innerHTML += "<p>Telefono >>> "+objet_data[0].phone+"</p>";
-			log.innerHTML += "<p>Email >>> "+objet_data[0].email+"</p>";	*/
-		}					
+		function read() {
+			
+			document.getElementById('div_table').style.display ='inherit';
+			console.log("hola1");
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				console.log("hola2");
+				$.post("read.php", data_form, get_data);
+			
+				return false;
+			});
+			
+			function get_table(data){
+			
+				console.log("hola3");
+				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+				
+				//EMPIEZA TABLA 
+				
+				let head_table = document.getElementById('head_table');//convierte el encabezado en variable
+				let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
+				body_table.innerHTML = "";//borrado para evitar duplicados
+				let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
+				let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
+				let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
+				let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
+				let h_cell_emeail = "<th>EMAIL</th>";//celda encabezado telefono
+
+				head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
+
+				var amount = objet_data.length;//cantidad de lineas a introducir
+									
+				for (var i = 0; i < amount-1; i++) {//bucle para insertar las lineas
+									  
+					let t_cell_name = "<td>"+objet_data[i].name_tbl+"</td>";//celda nombre
+					let t_cell_first_ln = "<td>"+objet_data[i].first_last_name_tbl+"</td>";//celda 1e apellido
+					let t_cell_second_ln = "<td>"+objet_data[i].second_last_name_tbl+"</td>";//celda 2o apellido
+					let t_cell_phone = "<td>"+objet_data[i].phone_tbl+"</td>";//celda telefono
+					let t_cell_email = "<td>"+objet_data[i].email_tbl+"</td>";//celda email
+																
+					body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+t_cell_email+"</tr>";		//introduce linea en cuerpo de la tabla
+				}
+			}
+		}
+		
 	</script>
 	
 </html>

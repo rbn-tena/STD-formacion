@@ -1,9 +1,9 @@
 <?php
-
+	include './db_conf.php';
 	$insert=False;
 		
 	if( !empty($_POST) ){
-		if( isset($_POST['name'], $_POST['first_last_name'], $_POST['second_last_name'],  $_POST['document'], $_POST['identification_string'], $_POST['birthdate'], $_POST['phone'], $_POST['email'])){
+		if( isset($_POST['name'], $_POST['first_last_name'], $_POST['second_last_name'],  /*$_POST['document'], $_POST['identification_string'], $_POST['birthdate'],*/ $_POST['phone'], $_POST['email'])){
 			//validación de nombre
 			if( !empty($_POST['name']) ){
 				if ( strlen($_POST['name']) < 30 ){
@@ -47,7 +47,7 @@
 				$insert +=1;
 			}
 			//validación tipo de documento
-			if( !empty($_POST['document']) ){
+			/*if( !empty($_POST['document']) ){
 				if($_POST['document'] == 'DNI' || $_POST['document'] == 'TIE'){
 					$document = $_POST['document'];
 				}
@@ -62,17 +62,17 @@
 			}
 			//validación indentificación
 			if( !empty($_POST['identification_string']) ){
-				switch ($document){
+				if ($document =="DNI"){
 					
-					case "DNI":
-						//if (ereg ("^[0-9]{8}" && "[a-zA-Z]{1}$", $_POST['identification_string']){
+						if (ereg ("^[0-9]{8}" && "[a-zA-Z]{1}$", $_POST['identification_string']){
 							$identification_string = $_POST['identification_string'];
-						//}
-						//else{
+						}
+						else{
 							$error[] = '<p>Formato incorrecto de DNI</p>';
 							$insert +=1;
-						//}
-					case "TIE":
+						}
+				}	
+				if ($document =="DNI"){
 						if (ereg ("^[a-zA-Z]{1}" && "[0-9]{7}" && "[a-zA-Z]{1}$", $_POST['identification_string']){
 							$identification_string = $_POST['identification_string'];
 						}
@@ -99,14 +99,22 @@
 			else{
 				$error[] = '<p>Debe incluir la fecha de nacimiento</p>';
 				$insert +=1;
-			}	
+			}	*/
 			//validación telefono	
 			if( !empty($_POST['phone']) ){
-				if (ereg ("^[0-9]${9}", $_POST['phone'])) {
-					$phone = $_POST['phone'];
+				if ( strlen($_POST['phone']) == 9){
+					if ( ctype_digit($_POST['phone'])){
+							
+						$phone = (int)$_POST['phone'];	
+																				
+					}
+					else{
+						$error[] = '<p>Campo telefono deben ser numeros</p>';
+						$insert +=1;
+					}
 				}
 				else{
-					$error[] = '<p>Formato de telefono incorrecto</p>';
+					$error[] = '<p>Campo telefono deben ser 9 cifras</p>';
 					$insert +=1;
 				}
 			}
@@ -116,13 +124,13 @@
 			}	
 			//validación de email
 			if( !empty($_POST['email']) ){
-				if(ereg("^[A-Za-z0-9\.|-|_]*[@]{1}[A-Za-z0-9\.|-|_]*[.]{1}[a-z]{2,5}$", $mail)) {
+				//if(ereg("^[A-Za-z0-9\.|-|_]*[@]{1}[A-Za-z0-9\.|-|_]*[.]{1}[a-z]{2,5}$", $mail)) {
 					$email= $_POST['email'];
-				}
+				/*}
 				else{
 					$error[] = '<p>Formato de email incorrecto</p>';
 					$insert +=1;
-				}
+				}*/
 			}
 			else{
 				$error[] = '<p>Debe incluir el email</p>';
@@ -139,6 +147,13 @@
 		$insert +=1;	
 	}
 	
+	if($insert ==0){
+		$sql = "INSERT INTO schedule (name, first_last_name, second_last_name, phone, email) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone', '$email')";
+		$error = '<p>Datos introducidos correctamente</p>';
+													
+		if (!mysqli_query($conexion, $sql)){$error = '<p>No es posible insertar los datos</p>';exit;}
+	}
+		
 	
 	
 	/*$name= $_POST['name'];
