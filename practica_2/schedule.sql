@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-12-2020 a las 13:52:30
+-- Tiempo de generación: 05-01-2021 a las 14:30:44
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.0
 
@@ -32,12 +32,21 @@ CREATE TABLE `schedule` (
   `name` varchar(30) NOT NULL,
   `first_last_name` varchar(30) NOT NULL,
   `second_last_name` varchar(30) NOT NULL,
-  `document_type` tinyint(1) NOT NULL,
-  `identification_string` varchar(9) NOT NULL,
-  `birthdate` date NOT NULL,
   `phone` int(9) NOT NULL,
   `email` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `schedule`
+--
+
+INSERT INTO `schedule` (`pk`, `name`, `first_last_name`, `second_last_name`, `phone`, `email`) VALUES
+(2, 'pepe', 'apeu', 'aped', 987412365, 'asd@ñlk.poi'),
+(3, 'ramon', 'ruiz', 'segundo', 257412365, 'asd@ñlk.poi'),
+(4, 'aad', 'aaa', 'aaaa', 565656565, 'a@a.a'),
+(5, 'yo', 'modificado', 'ese', 369874521, 'prueba@email.com'),
+(13, 'modificado', 'nuevo', 'otro', 988745632, 'a@h.d'),
+(14, 'prueba', 'primerpru', 'segunpru', 124753689, 'a@g.v');
 
 --
 -- Índices para tablas volcadas
@@ -57,7 +66,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT de la tabla `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `pk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

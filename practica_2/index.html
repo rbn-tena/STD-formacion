@@ -11,8 +11,6 @@
 	</head>
 	
 	<body>
-		<button onclick="create()">NUEVO</button>
-		<button onclick="read()">VER TODOS</button>
 		<div id= "create">
 			<form id="form"  method="POST">
 				<p>
@@ -27,17 +25,6 @@
 					<label for="second_last_name">Segundo apellido:</label>
 					<input type="text" name="second_last_name" id="second_last_name" >
 				</p>
-				<!--<p>
-					<label for="document_type ">Documento de identidad</label>
-					<input type="radio" name="document" id="dni" value="DNI" ><label for="dni">DNI</label><!--mismo name para siempre uno--><!--
-					<input type="radio" name="document" id="tie" value = "TIE" ><label for="tie">TIE</label>
-					<!--mismo name para siempre uno--><!--
-					<input type="text" name="identification_string" id="identification_string" >
-				</p>
-				<p>
-					<label for="birthdate">Fecha de nacimiento:</label>	
-					<input type="text" name="birthdate" id="birthdate" >
-				</p>-->
 				<p>
 					<label for="phone">Telefono:</label>	
 					<input type="tel" name="phone" id="phone" >
@@ -47,7 +34,7 @@
 					<input type="email" name="email" id="email" >
 				</p>
 				<p>
-					<input class="submit" type="submit" value="ENVIAR" ><!--/boton manda a comprobar/-->
+					<button onclick="create()">GUARDAR NUEVO</button>
 					<button onclick="read()">VER</button>
 				</p>
 				<p>
@@ -80,9 +67,6 @@
 	
 		function create() {
 			
-			//document.getElementById('create').style.display ='inherit';
-		
-		
 			$("#form").submit(function(){
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
@@ -96,16 +80,13 @@
 				console.log(data);
 				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
 				console.log(objet_data);
-				log.innerHTML += "<p>"+objet_data+"</p>";	
-				/*log.innerHTML += "<p>P. apellido >>> "+objet_data[0].first_last_name+"</p>";
-				log.innerHTML += "<p>S. apellido >>> "+objet_data[0].second_last_name+"</p>";
-				log.innerHTML += "<p>Tipo de documento >>> "+objet_data[0].document+"</p>";
-				log.innerHTML += "<p>identificación >>> "+objet_data[0].identification_string+"</p>";	
-				log.innerHTML += "<p>F. nacimiento >>> "+objet_data[0].birthdate+"</p>";	
-				log.innerHTML += "<p>Telefono >>> "+objet_data[0].phone+"</p>";
-				log.innerHTML += "<p>Email >>> "+objet_data[0].email+"</p>";	*/
+				log.innerHTML = "<p>"+objet_data+"</p>";	
 			}
 		}
+		
+	</script>
+	
+	<script>
 		
 		function read() {
 			
@@ -122,7 +103,7 @@
 			
 			function get_table(data){
 			
-				console.log("hola3");
+				console.log(data);
 				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
 				
 				//EMPIEZA TABLA 
@@ -153,6 +134,9 @@
 			}
 		}
 		
+	</script>	
+	<script>
+		
 		function update() {
 			
 			$("#form").submit(function(){
@@ -172,6 +156,9 @@
 			}
 		}
 		
+	</script>	
+	<script>
+
 		function dele() {
 			
 			$("#form").submit(function(){
