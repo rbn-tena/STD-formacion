@@ -13,7 +13,7 @@
 	<body>
 		<button onclick="create()">NUEVO</button>
 		<button onclick="read()">VER TODOS</button>
-		<div id= "create">
+		<div id= "create" style="display:none">
 			<form id="form"  method="POST">
 				<p>
 					<label for="name">Nombre:</label>
@@ -48,7 +48,6 @@
 				</p>
 				<p>
 					<input class="submit" type="submit" value="ENVIAR" ><!--/boton manda a comprobar/-->
-					<button onclick="read()">VER TODOS</button>
 				</p>
 			</form>
 		</div>
@@ -74,7 +73,7 @@
 	
 		function create() {
 			
-			//document.getElementById('create').style.display ='inherit';
+			document.getElementById('create').style.display ='inherit';
 		
 		
 			$("#form").submit(function(){
@@ -109,7 +108,7 @@
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
 				console.log("hola2");
-				$.post("read.php", data_form, get_table);
+				$.post("read.php", data_form, get_data);
 			
 				return false;
 			});
@@ -128,7 +127,7 @@
 				let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
 				let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
 				let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
-				let h_cell_email = "<th>EMAIL</th>";//celda encabezado telefono
+				let h_cell_emeail = "<th>EMAIL</th>";//celda encabezado telefono
 
 				head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
 
