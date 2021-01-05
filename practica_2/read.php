@@ -3,6 +3,7 @@
 	
 	$sql = 'SELECT * FROM `schedule` ';
 	$contador_where=0;
+	
 	if( !empty($_POST['name']) ){
 		if ($contador_where > 0){
 			$where .= " AND name = '".$_POST['name']."'";
@@ -37,7 +38,7 @@
 	
 	if( !empty($_POST['email']) ){
 		if ($contador_where > 0){
-			$where .= " AND phone = '".$_POST['email']."'";
+			$where .= " AND email = '".$_POST['email']."'";
 		}
 		$where ="WHERE email = '".$_POST['email']."'";
 		$contador_where +=1;
@@ -51,11 +52,11 @@
 	
 	while ($fila = mysqli_fetch_array($resultado)) {
 		
-		$name_tbl = $fila[0];
-		$first_last_name_tbl = $fila[1];
-		$second_last_name_tbl = $fila[2];
-		$phone_tbl = $fila[3];
-		$email_tbl = $fila[4];
+		$name_tbl = $fila[1];
+		$first_last_name_tbl = $fila[2];
+		$second_last_name_tbl = $fila[3];
+		$phone_tbl = $fila[4];
+		$email_tbl = $fila[5];
 		
 		$table[] = array('name_tbl'=>$name_tbl,'first_last_name_tbl'=>$first_last_name_tbl,'second_last_name_tbl'=>$second_last_name_tbl,'phone_tbl'=>$phone_tbl, 'email_tbl'=>$email_tbl);
 	}

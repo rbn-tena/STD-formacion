@@ -48,7 +48,13 @@
 				</p>
 				<p>
 					<input class="submit" type="submit" value="ENVIAR" ><!--/boton manda a comprobar/-->
-					<button onclick="read()">VER TODOS</button>
+					<button onclick="read()">VER</button>
+				</p>
+				<p>
+					<label for="pk">Modificar Nº:</label>	
+					<input type="text" name="pk" id="pk" >
+					<button onclick="update()">MODIFICAR</button>
+					<button onclick="dele()">ELIMINAR</button>
 				</p>
 			</form>
 		</div>
@@ -146,6 +152,45 @@
 				}
 			}
 		}
+		
+		function update() {
+			
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				$.post("update.php", data_form, get_info);
+			
+				return false;
+			});
+			
+			function get_info(data){
+			
+				console.log(data);
+				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+				console.log(objet_data);
+				log.innerHTML += "<p>"+objet_data+"</p>";
+			}
+		}
+		
+		function dele() {
+			
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				$.post("delete.php", data_form, info_delete);
+			
+				return false;
+			});
+			
+			function info_delete(data){
+			
+				console.log(data);
+				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+				console.log(objet_data);
+				log.innerHTML += "<p>"+objet_data+"</p>";	
+			}
+		}
+		
 		
 	</script>
 	
