@@ -1,5 +1,5 @@
 <?php
-	include './db_conf.php';
+	include '../db_conf.php';
 	
 	$sql = 'SELECT * FROM `schedule` ';
 	$contador_where=0;
@@ -52,13 +52,14 @@
 	
 	while ($fila = mysqli_fetch_array($resultado)) {
 		
+		$pk_tbl = $fila[0];
 		$name_tbl = $fila[1];
 		$first_last_name_tbl = $fila[2];
 		$second_last_name_tbl = $fila[3];
 		$phone_tbl = $fila[4];
 		$email_tbl = $fila[5];
 		
-		$table[] = array('name_tbl'=>$name_tbl,'first_last_name_tbl'=>$first_last_name_tbl,'second_last_name_tbl'=>$second_last_name_tbl,'phone_tbl'=>$phone_tbl, 'email_tbl'=>$email_tbl);
+		$table[] = array('pk_tbl'=> $pk_tbl,'name_tbl'=>$name_tbl,'first_last_name_tbl'=>$first_last_name_tbl,'second_last_name_tbl'=>$second_last_name_tbl,'phone_tbl'=>$phone_tbl, 'email_tbl'=>$email_tbl);
 	}
 	
 	$json_table =json_encode($table);

@@ -1,5 +1,5 @@
 <?php
-	include './db_conf.php';
+	include '../db_conf.php';
 	
 	$sql = 'DELETE FROM `schedule` WHERE `schedule`.`pk` = '. $_POST['pk'];
 		

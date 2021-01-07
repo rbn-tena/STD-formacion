@@ -70,7 +70,7 @@
 			$("#form").submit(function(){
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
-				$.post("validation.php", data_form, get_data);
+				$.post("create/index.php", data_form, get_data);
 			
 				return false;
 			});
@@ -96,7 +96,7 @@
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
 				console.log("hola2");
-				$.post("read.php", data_form, get_table);
+				$.post("read/index.php", data_form, get_table);
 			
 				return false;
 			});
@@ -105,31 +105,33 @@
 			
 				console.log(data);
 				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
-				
+				console.log(objet_data);
 				//EMPIEZA TABLA 
 				
 				let head_table = document.getElementById('head_table');//convierte el encabezado en variable
 				let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
 				body_table.innerHTML = "";//borrado para evitar duplicados
+				let h_cell_pk = "<th>ID</th>";//celda encabezado nombre
 				let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
 				let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
 				let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
 				let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
 				let h_cell_email = "<th>EMAIL</th>";//celda encabezado telefono
 
-				head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
+				head_table.innerHTML = "<tr>"+h_cell_pk+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
 
 				var amount = objet_data.length;//cantidad de lineas a introducir
 									
-				for (var i = 0; i < amount-1; i++) {//bucle para insertar las lineas
+				for (var i = 0; i < amount; i++) {//bucle para insertar las lineas
 									  
+					let t_pk = "<td>"+objet_data[i].pk_tbl+"</td>";//celda nombre
 					let t_cell_name = "<td>"+objet_data[i].name_tbl+"</td>";//celda nombre
 					let t_cell_first_ln = "<td>"+objet_data[i].first_last_name_tbl+"</td>";//celda 1e apellido
 					let t_cell_second_ln = "<td>"+objet_data[i].second_last_name_tbl+"</td>";//celda 2o apellido
 					let t_cell_phone = "<td>"+objet_data[i].phone_tbl+"</td>";//celda telefono
 					let t_cell_email = "<td>"+objet_data[i].email_tbl+"</td>";//celda email
-																
-					body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+t_cell_email+"</tr>";		//introduce linea en cuerpo de la tabla
+																console.log(t_cell_name,t_cell_first_ln,t_cell_second_ln, t_cell_phone,t_cell_email );
+					body_table.innerHTML += "<tr>"+t_pk+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+t_cell_email+"</tr>";		//introduce linea en cuerpo de la tabla
 				}
 			}
 		}
@@ -142,7 +144,7 @@
 			$("#form").submit(function(){
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
-				$.post("update.php", data_form, get_info);
+				$.post("update/index.php", data_form, get_info);
 			
 				return false;
 			});
@@ -164,7 +166,7 @@
 			$("#form").submit(function(){
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
-				$.post("delete.php", data_form, info_delete);
+				$.post("delete/index.php", data_form, info_delete);
 			
 				return false;
 			});

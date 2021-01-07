@@ -1,2 +1,0 @@
-cambio planteamiento en read
-formulario completo e if en parte php que evalue si se pide igualdad en ese campo, si todos en blanco, pide todo

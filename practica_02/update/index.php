@@ -1,5 +1,5 @@
 <?php
-	include './db_conf.php';
+	include '../db_conf.php';
 	
 	$sql = 'UPDATE `schedule` SET';
 	$contador_set=0;
