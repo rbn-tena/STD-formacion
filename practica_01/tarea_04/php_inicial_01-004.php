@@ -1,86 +1,48 @@
 <?php
-	/*$server = "localhost";
-	$user = "root";
-	$pass = "";
-	$BD = "stdcore_practicas";
-	$conexion = mysqli_connect($server,$user,$pass,$BD);*/
-	
 	include 'db_conf.php';
-	
+	$insert=false;
 	//si es diferente a vacio
 	if( !empty($_POST) ){
 		// Comprobar si llegaron los campos requeridos
-		if( isset($_POST['name']) && isset($_POST['first_last_name']) && isset($_POST['second_last_name']) && isset($_POST['phone'])){
+		if(isset($_POST['name'], $_POST['first_last_name'], $_POST['second_last_name'], $_POST['phone'])){
 			//comprobar nombre
-			if( !empty($_POST['name']) ){
-				if ( strlen($_POST['name']) < 40 ){
-					$name= $_POST['name'];
+			if(!empty($_POST['name'])){ 
+				if(strlen($_POST['name']) < 40){$name= $_POST['name'];}
+				else{$error[] = '<p>Nombre de maximo 40 caracteres</p>'; $insert ++; }
+			}
+			else{$error[] = '<p>Campo nombre no puede estar vacio</p>'; $insert ++; }		
 					//comprobar primer apellido
-					if( !empty($_POST['first_last_name']) ){
-						if ( strlen($_POST['first_last_name']) < 40 ){	
-							$first_last_name = $_POST['first_last_name'];
+			if(!empty($_POST['name'])){ 
+				if(strlen($_POST['name']) < 40){$name= $_POST['name'];}
+				else{$error[] = '<p>Nombre de maximo 40 caracteres</p>'; $insert ++; }
+			}
+			else{$error[] = '<p>Campo nombre no puede estar vacio</p>'; $insert ++; }		
 							//comprobar segundo apellido
-							if( !empty($_POST['second_last_name']) ){
-								if ( strlen($_POST['second_last_name']) < 40 ){	
-									$second_last_name = $_POST['second_last_name'];
+			if(!empty($_POST['second_last_name'])){
+				if (strlen($_POST['second_last_name']) < 40){ $second_last_name = $_POST['second_last_name']; }
+				else{ $error[] = '<p>Segundo apellido de maximo 40 caracteres</p>'; $insert ++; }	
+			}
+			else{ $error[] = '<p>Campo segundo apellido no puede estar vacio</p>'; $insert ++; }	
 									//comprobar telefono
-									if( !empty($_POST['phone']) ){
-										if ( strlen($_POST['phone']) <= 9 &&  strlen($_POST['phone']) >= 9){
-											if ( ctype_digit($_POST['phone'])){
-							
-												$phone = (int)$_POST['phone'];	
+			if(!empty($_POST['phone'])){
+				if (strlen($_POST['phone']) == 9){ 
+					if (ctype_digit($_POST['phone'])){ $phone = (int)$_POST['phone']; }
+					else{ $error[] = '<p>Campo telefono deben ser numeros</p>'; $insert ++; }
+				}
+				else{ $error[] = '<p>Campo telefono deben ser 9 cifras</p>'; $insert ++; }
+			}
+			else{ $error []= '<p>Campo telefono no puede estar vacio</p>'; $insert ++; }
+		}
+		else{ $error[] = '<p>No se han recibido todos los datos requeridos</p>'; $insert ++; }
+	}
+	else{ $error[]= '<p>No se han enviado datos</p>'; $insert ++; }	
 																				
-												$sql = "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')";
-												$error = 'datos introducidos correctamente';
-												
-												if (!mysqli_query($conexion, $sql)){$error = 'no es posible insertar los datos';exit;}
-											}
-											else{
-												$error = 'Campo telefono deben ser numeros';
-											}
-										}
-										else{
-											$error = 'Campo telefono deben ser 9 cifras';
-										}
-									}
-									else{
-										$error = 'Campo telefono no puede estar vacio';
-									}
-								}
-								else{
-									$error = 'Segundo apellido de maximo 40 caracteres';
-								}
-							}
-							else{
-								$error = 'Campo segundo apellido no puede estar vacio';
-							}	
-						}
-						else{
-							$error[] = 'Primer apellido de maximo 40 caracteres';
-						}
-					}
-					else{
-						$error[] = 'Campo primer apellido no puede estar vacio';
-					}
-				}
-				else{
-					$error[] = 'Nombre de maximo 40 caracteres';
-				}
-			}
-			else{
-				$error[] = 'Campo nombre no puede estar vacio';
-			}
-		}
-		else{
-			$error[] = 'No se han recibido todos los datos requeridos';
-		}
+	if($insert ==0){
+		$error = '<p>Datos introducidos correctamente</p>';
+		if (!mysqli_query($conexion, "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')")){$error = '<p>No es posible insertar los datos</p>';exit;}
 	}
-	else{ $error[]= 'No se han enviado datos';	
-	}
-		
-	$sql = 'SELECT * FROM `php_inicial_ruben` ';
-		
-	$resultado=mysqli_query($conexion, $sql);
+	
+	$resultado=mysqli_query($conexion, 'SELECT * FROM `php_inicial_ruben` ');
 	
 	while ($fila = mysqli_fetch_array($resultado)) {
 		

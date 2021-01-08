@@ -1,20 +1,9 @@
 <?php
-
 	include '../db_conf.php';
 	
-	$name= 'Antonio';
-	$first_last_name ='Garcia';
-	$second_last_name ='Gracia';
-	$phone = (int)'123456123';
+	if (!mysqli_query($conexion, "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('Antonio', 'Garcia', 'Gracia', '')")){echo "no es posible insertar los datos";exit;}
 		
-		
-
-	$sql = "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('$name', '$first_last_name', '$second_last_name', '$phone')";
-	if (!mysqli_query($conexion, $sql)){echo "no es posible insertar los datos";exit;}
-		
-	$sql = "SELECT * FROM `php_inicial_ruben` WHERE 1";
-		
-	$resultado = mysqli_query($conexion, $sql);
+	$resultado = mysqli_query($conexion, "SELECT * FROM `php_inicial_ruben` WHERE 1");
 		
 	echo ('<table border=1><tr><th>NOMBRE:</th><th>PRIMNER APELLIDO:</th><th>SEGUNDO APELLIDO:</th><th>TELEFONO:</th></tr>');
 		

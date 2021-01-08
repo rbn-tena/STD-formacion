@@ -101,10 +101,10 @@
 				return false;
 			});
 			
-			function get_table(data){
+			function get_table(table){
 			
 				console.log(data);
-				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+				var objet_data = JSON.parse(table);	//creamos un objeto con el Json
 				console.log(objet_data);
 				//EMPIEZA TABLA 
 				
@@ -149,9 +149,9 @@
 				return false;
 			});
 			
-			function get_info(data){
+			function get_info(info){
 			
-				console.log(data);
+				console.log(info);
 				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
 				console.log(objet_data);
 				log.innerHTML += "<p>"+objet_data+"</p>";
@@ -171,10 +171,10 @@
 				return false;
 			});
 			
-			function info_delete(data){
+			function info_delete(data_delete){
 			
-				console.log(data);
-				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+				console.log(data_delete);
+				var objet_data = JSON.parse(data_delete);	//creamos un objeto con el Json
 				console.log(objet_data);
 				log.innerHTML += "<p>"+objet_data+"</p>";	
 			}
