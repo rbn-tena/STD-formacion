@@ -11,7 +11,6 @@ if (!mysqli_query($conexion, "
     INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone)
     VALUES ('".$_POST['name']."', '".$_POST['first_last_name']."', '".$_POST['second_last_name']."', '".(int)$_POST['phone']."')"
 )) { die('no es posible insertar los datos'); exit; }
-mysqli_free_result($sql_results);
 
 //-> DB - Data Select:
 $sql_results = mysqli_query($conexion, "SELECT * FROM php_inicial_ruben WHERE 1");
