@@ -1,5 +1,5 @@
 <?php
-	include '../db_conf.php';
+	include '../config/db_conf.php';
 	
 	if (!mysqli_query($conexion, "INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) VALUES ('Antonio', 'Garcia', 'Gracia', '')")){echo "no es posible insertar los datos";exit;}
 		

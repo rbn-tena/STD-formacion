@@ -70,7 +70,7 @@
 			$("#form").submit(function(){
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
-				$.post("create/index.php", data_form, get_data);
+				$.post("create/create.php", data_form, get_data);
 			
 				return false;
 			});
@@ -96,7 +96,7 @@
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
 				console.log("hola2");
-				$.post("read/index.php", data_form, get_table);
+				$.post("read/read.php", data_form, get_table);
 			
 				return false;
 			});
@@ -144,7 +144,7 @@
 			$("#form").submit(function(){
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
-				$.post("update/index.php", data_form, get_info);
+				$.post("update/update.php", data_form, get_info);
 			
 				return false;
 			});
@@ -166,7 +166,7 @@
 			$("#form").submit(function(){
 				var data_form=$(this).serialize(); 
 				console.log(data_form);
-				$.post("delete/index.php", data_form, info_delete);
+				$.post("delete/delete.php", data_form, info_delete);
 			
 				return false;
 			});

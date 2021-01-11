@@ -1,5 +1,5 @@
 <?php
-	include '../db_conf.php';
+	include '../config/db_conf.php';
 	
 	$name= $_POST['name'];
 	$first_last_name = $_POST['first_last_name'];

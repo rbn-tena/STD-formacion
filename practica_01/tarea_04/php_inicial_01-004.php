@@ -1,5 +1,5 @@
 <?php
-	include 'db_conf.php';
+	include '../config/db_conf.php';
 	$insert=false;
 	//si es diferente a vacio
 	if( !empty($_POST) ){
