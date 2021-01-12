@@ -26,12 +26,10 @@ if (!ctype_digit($_POST['phone'])) { $error[] = '<p>Campo telefono deben ser num
       
 if ($insert != 0) { die("ERROR EN DATOS, DEVOLVER JSON con ERROR y mostrarlo en View. No seguir ejecutando."); exit; }
 
-
-
 if (!mysqli_query($conexion, "
     INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone)
     VALUES ('".$_POST['name']."', '".$_POST['first_last_name']."', '".$_POST['second_last_name']."', '".$_POST['phone']."')")
-){ $error[] = '<p>No es posible insertar los datos</p>'; exit; }
+) { $error[] = '<p>No es posible insertar los datos</p>'; exit; }
 
 
 $resultado = mysqli_query($conexion, "SELECT * FROM php_inicial_ruben");
