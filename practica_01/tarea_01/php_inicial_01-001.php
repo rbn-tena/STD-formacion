@@ -2,12 +2,12 @@
 
 include_once('../config/db_conf.php');
 	
-if (!mysqli_query($conexion, "
+if (!mysqli_query($db_conn, "
 	INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone) 
 	VALUES ('Antonio', 'Garcia', 'Gracia', '')"
 )) {die('no es posible insertar los datos'); exit; }
 		
-$results = mysqli_query($conexion, "SELECT * FROM `php_inicial_ruben` WHERE 1");
+$sql_results = mysqli_query($db_conn, "SELECT * FROM `php_inicial_ruben` WHERE 1");
 if (mysqli_num_rows($results) == 0) { die('No results'); }
 		
 echo ('<table border=1><tr>
@@ -38,6 +38,6 @@ echo('</table>');
 
 mysqli_free_result($sql_results);//libera mysql
 
-unset($_POST, $conexion, $sql_results, $row);//destruye variables
-mysqli_close($_db_conn);//cierra conexión
+unset($_POST, $db_conn, $sql_results, $row);//destruye variables
+mysqli_close($db_conn);//cierra conexión
 exit; /*-- EXIT FILE --*/ ?>

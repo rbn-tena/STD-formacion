@@ -26,20 +26,21 @@ if (!ctype_digit($_POST['phone'])) { $error[] = '<p>Campo telefono deben ser num
       
 if ($insert != 0) { die("ERROR EN DATOS, DEVOLVER JSON con ERROR y mostrarlo en View. No seguir ejecutando."); exit; }
 
-
-
-if (!mysqli_query($conexion, "
+if (!mysqli_query($db_conn, "
     INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone)
     VALUES ('".$_POST['name']."', '".$_POST['first_last_name']."', '".$_POST['second_last_name']."', '".$_POST['phone']."')")
 ){ $error[] = '<p>No es posible insertar los datos</p>'; exit; }
 
 
-$resultado = mysqli_query($conexion, "SELECT * FROM php_inicial_ruben");
+$sql_result = mysqli_query($db_conn, "SELECT * FROM php_inicial_ruben");
 
-while ($fila = mysqli_fetch_array($resultado)) { $table[] = array('name_tbl'=>$fila[0],'first_last_name_tbl'=>$fila[1],'second_last_name_tbl'=>$fila[2],'phone_tbl'=>$fila[3]); }
+while ($row = mysqli_fetch_array($sql_result)) { $table[] = array('name_tbl'=>$row[0],'first_last_name_tbl'=>$row[1],'second_last_name_tbl'=>$row[2],'phone_tbl'=>$row[3]); }
 $table[] = $error;
 $json_table =json_encode($table);
 echo $json_table;
 
+mysqli_free_result($sql_results);
 
-/*--END FILE--*/ ?>
+unset($_POST, $db_conn, $sql_results, $row);
+mysqli_close($db_conn);
+exit; /*-- EXIT FILE --*/ ?>
