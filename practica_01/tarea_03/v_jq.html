@@ -112,13 +112,12 @@
 						function get_data(data){//metodo de recepcion
 							
 							//data_response = data.responseText;//pasa la respuesta a texto ESTO LO PETA TODO
-							console.log(data);
+							console.log(data);	//descomentado suelta <br /><b>Parse error</b>:  syntax error, unexpected token &quot;:&quot; in <b>C:\xampp\htdocs\php_inicial\practica_01\tarea_03\helper.php</b> on line <b>4</b><br /> Y si helper es array es indiferente
 							var objet_data = JSON.parse(data);	//creamos un objeto con el Json
 							console.log(objet_data);	
 							console.log(objet_data[0].code);				
 							if (objet_data[0].code < 0){
 								console.log(objet_data.length);
-								console.log(amount-1);	
 								div_log.innerHTML = objet_data[0].message;	
 							}
 							else{

@@ -27,12 +27,13 @@ if (!ctype_digit($_POST['phone'])) { $error .= '<p>Campo teléfono deben ser nú
 
 if (!empty($error)) { send_err(-1, $error); exit; }
 
+// Insert data
 if (!mysqli_query($db_conn, "
     INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone)
     VALUES ('".$_POST['name']."', '".$_POST['first_last_name']."', '".$_POST['second_last_name']."', '".$_POST['phone']."')")
 ) { send_err(-2, '<p>No es posible insertar los datos</p>'); exit; }
 
-
+// Send table
 $results = mysqli_query($db_conn, "SELECT * FROM php_inicial_ruben");
 
 while ($row = mysqli_fetch_array($results)) { $table[] = array('name_tbl'=>$row[0],'first_last_name_tbl'=>$row[1],'second_last_name_tbl'=>$row[2],'phone_tbl'=>$row[3]); }
@@ -42,47 +43,5 @@ die(json_encode($table));
 mysqli_free_result($sql_results);
 unset($_POST, $db_conn, $sql_results, $row);
 mysqli_close($db_conn);
-
-/*INTENTOS VARIOS
-function send_err ($code, $message){
-
-        
-    
-        response: {
-            code: $code;
-            message : $message;
-        };
-        //result {} no entiendo para que
-    
-
-    die(json_encode(response)); exit;
-
-}*/
-
-/*function send_err ($code, $message){
-
-    $response[] = array("code"=>$code,"message"=>$message);
-    die(json_encode($response)); exit;
-
-}
-// HELPERS ----
- 
-
-/*function send_err ($code, $message){
-
-    /*
-    {
-        response {
-            code: $code
-            message : $message
-        }
-        result {}
-    }
-    
-    die(json_encode(json)); exit;
-
-}*/
-
-
 
 exit; /*-- EXIT FILE --*/ ?>
