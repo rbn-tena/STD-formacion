@@ -1,7 +1,7 @@
 <?php
 
 include_once('../config/db_conf.php');
-include_once('./helper.php');
+include_once('../utilities/helper.php');
 $error = '';
 
 // CHECK REQUEST:
@@ -40,8 +40,8 @@ while ($row = mysqli_fetch_array($results)) { $table[] = array('name_tbl'=>$row[
 
 die(json_encode($table));
 
-mysqli_free_result($sql_results);
-unset($_POST, $db_conn, $sql_results, $row);
+mysqli_free_result($results);
+unset($_POST, $db_conn, $results, $row);
 mysqli_close($db_conn);
 
 exit; /*-- EXIT FILE --*/ ?>
