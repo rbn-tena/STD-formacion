@@ -1,6 +1,6 @@
 <?php
 
-include_once('../db_conf.php');
+include_once('../config/db_conf.php');
 
 //-> CHECK REQUESTS:
 if (!isset($_POST)) { die('Method no valid'); exit; }
@@ -31,9 +31,7 @@ while ($row = mysqli_fetch_row($sql_results)) { echo('<tr>
 echo('</table>');
 
 mysqli_free_result($sql_results);
-
-unset($_POST, $db_conn, $sql_results, $row);
 mysqli_close($db_conn);
+unset($_POST, $db_conn, $sql_results, $row);
+
 exit; /*-- EXIT FILE --*/ ?>
-
-
