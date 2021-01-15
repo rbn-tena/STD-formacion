@@ -3,7 +3,18 @@ body {
   font-family: 'Lato';
   font-weight: 300;
   font-size: 1.25rem;
-  width: 300px;
+  width: 1080px;
+  text-align: center;
+}
+
+#div_left {
+  float: left;
+  width: 500px;
+}
+
+#div_table {
+  float: right;
+  width: 500px;
 }
 
 form, p {

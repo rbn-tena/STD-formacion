@@ -90,29 +90,35 @@
 																		
 									//EMPIEZA TABLA 
 									
-									let head_table = document.getElementById('head_table');//convierte el encabezado en variable
-									let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
-									body_table.innerHTML = "";//borrado para evitar duplicados
-									let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
-									let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
-									let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
-									let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
-
-									head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+"</tr>";//inserta el encabezado
-
-									var amount = objet_data.length;//cantidad de lineas a introducir
-									
-									for (var i = 0; i < amount-1; i++) {//bucle para insertar las lineas
-									  
-										let t_cell_name = "<td>"+objet_data[i].name_tbl+"</td>";//celda nombre
-										let t_cell_first_ln = "<td>"+objet_data[i].first_last_name_tbl+"</td>";//celda 1e apellido
-										let t_cell_second_ln = "<td>"+objet_data[i].second_last_name_tbl+"</td>";//celda 2o apellido
-										let t_cell_phone = "<td>"+objet_data[i].phone_tbl+"</td>";//celda telefono
-										
-										body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+"</tr>";//introduce linea en cuerpo de la tabla
+									if (objet_data[0].code < 0){
+										console.log(objet_data.length);
+										div_log.innerHTML = objet_data[0].message;	
 									}
-									console.log(objet_data);
-									div_log.innerHTML = objet_data[amount-1];	
+									else{
+										//EMPIEZA TABLA 
+											
+										let head_table = document.getElementById('head_table');//convierte el encabezado en variable
+										let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
+										body_table.innerHTML = "";//borrado para evitar duplicados
+										let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
+										let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
+										let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
+										let h_cell_phone = "<th>TELÉFONO</th>";//celda encabezado telefono
+
+										head_table.innerHTML = "<tr>"+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+"</tr>";//inserta el encabezado
+
+										var amount = objet_data.length;//cantidad de lineas a introducir
+												
+										for (var i = 0; i < amount; i++) {//bucle para insertar las lineas
+												
+											let t_cell_name = "<td>"+objet_data[i].name_tbl+"</td>";//celda nombre
+											let t_cell_first_ln = "<td>"+objet_data[i].first_last_name_tbl+"</td>";//celda 1e apellido
+											let t_cell_second_ln = "<td>"+objet_data[i].second_last_name_tbl+"</td>";//celda 2o apellido
+											let t_cell_phone = "<td>"+objet_data[i].phone_tbl+"</td>";//celda telefono
+													
+											body_table.innerHTML += "<tr>"+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+"</tr>";//introduce linea en cuerpo de la tabla
+										}
+									}
 
 								}
 							}

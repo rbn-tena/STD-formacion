@@ -5,7 +5,8 @@ include_once('../config/db_conf.php');
 //-> CHECK REQUESTS:
 if (!isset($_POST)) { die('Method no valid'); exit; }
 if (!isset($_POST['name'], $_POST['first_last_name'], $_POST['second_last_name'], $_POST['phone'])) { die('Parameters no valid'); exit; }
-
+//-> Validation Phone
+if(!ctype_digit($_POST['phone'])) { echo('<p>El campo teléfono no ha sido guardado, deben de ser números, por favor revise.</p>'); }
 //-> DB - Data Insert:
 if (!mysqli_query($db_conn, "
     INSERT INTO php_inicial_ruben (name, first_last_name, second_last_name, phone)
