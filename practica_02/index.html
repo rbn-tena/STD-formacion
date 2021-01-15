@@ -11,22 +11,22 @@
 	</head>
 	
 	<body>
-		<div id= "create">
+		<div id= "div_form">
 			<form id="form"  method="POST">
 				<p>
 					<label for="name">Nombre:</label>
 					<input type="text" name="name" id="name" >
 				</p>	
 				<p>
-					<label for="first_last_name">Primer apellido:</label>
-					<input type="text" name="first_last_name" id="first_last_name" >
+					<label for="name_last_first">Primer apellido:</label>
+					<input type="text" name="name_last_first" id="name_last_first" >
 				</p>
 				<p>
-					<label for="second_last_name">Segundo apellido:</label>
-					<input type="text" name="second_last_name" id="second_last_name" >
+					<label for="name_last_second">Segundo apellido:</label>
+					<input type="text" name="name_last_second" id="name_last_second" >
 				</p>
 				<p>
-					<label for="phone">Telefono:</label>	
+					<label for="phone">Teléfono:</label>	
 					<input type="tel" name="phone" id="phone" >
 				</p>
 				<p>
@@ -80,7 +80,7 @@
 				console.log(data);
 				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
 				console.log(objet_data);
-				log.innerHTML = "<p>"+objet_data+"</p>";	
+				log.innerHTML = objet_data[0].message;	
 			}
 		}
 		
