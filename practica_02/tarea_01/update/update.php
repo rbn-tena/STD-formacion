@@ -1,6 +1,5 @@
 <?php
-include_once('../config/db_conf.php');
-include_once('../utilities/helper.php');
+include_once('../../config/db_conf.php');
 
 $sql = 'UPDATE `schedule` SET';
 $count=0;
@@ -43,16 +42,15 @@ if(!empty($_POST['email'])){
 	$count ++;
 }
 
-if (!empty($error)) { send_err(-1, $error); exit; }
+if (!empty($error)) { echo($error); exit; }
 
 $where = " WHERE `schedule`.`pk` = ". $_POST['pk'];
 $sql .= $set.$where;
 								
-if (!mysqli_query($db_conn, $sql)){ send_err(-2, '<p>No es posible modificar los datos</p>'); exit; }
+if (!mysqli_query($db_conn, $sql)){ echo('<p>No es posible modificar los datos</p>'); exit; }
 
-$info[] = array("code"=>1,"message"=>"<p>Datos modificados correctamente</p>");
-die(json_encode($info));
-unset($_POST, $db_conn);
+echo('<p>Datos modificados correctamente</p>');
+
 mysqli_close($db_conn);
-
+unset($_POST, $db_conn);
 exit; /*-- EXIT FILE --*/ ?>

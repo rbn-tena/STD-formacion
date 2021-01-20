@@ -2,6 +2,7 @@
 /* ERROR CODES
    -1 = Campos de formulario incompletos o erroneos
    -2 = Error en la conexión a la base de datos
+   -3 = No devuelve datos
 */
 
 function send_err($code, $message){

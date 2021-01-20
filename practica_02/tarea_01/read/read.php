@@ -1,6 +1,5 @@
 <?php
-include_once('../config/db_conf.php');
-include_once('../utilities/helper.php');
+include_once('../../config/db_conf.php');
 
 $sql = 'SELECT * FROM `schedule` ';
 $count=0;
@@ -39,12 +38,28 @@ if($count > 0){ $sql .= $where; }
 	
 $result=mysqli_query($db_conn, $sql);
 
-if(!$result){ send_err(-3, '<p>No encontrados resultados</p>'); exit; }
+//if (mysqli_num_rows($results) == 0) { echo('<p>No encontrados resultados</p>'); exit; }
 
-while($row = mysqli_fetch_array($result)) { $table[] = array('row_pk'=> $row[0],'row_name'=>$row[1],'row_name_last_first'=>$row[2],'row_name_last_second'=>$row[3],'row_phone'=>$row[4],'row_email'=>$row[5]);}
+echo('<table border=1><tr>
+	<th>ID:</th>
+	<th>NOMBRE:</th>
+    <th>PRIMER APELLIDO:</th>
+    <th>SEGUNDO APELLIDO:</th>
+	<th>TELÉFONO:</th>
+	<th>MAIl:</th>
+</tr>');
 
-die(json_encode($table));
-unset($_POST, $db_conn);
+while($row = mysqli_fetch_array($result)) { echo('<tr>
+	<td>'.$row[0].'</td>
+	<td>'.$row[1].'</td>
+	<td>'.$row[2].'</td>
+	<td>'.$row[3].'</td>
+	<td>'.$row[4].'</td>
+	<td>'.$row[5].'</td>
+</tr>'); }
+echo('</table>');
+
+mysqli_free_result($result);
 mysqli_close($db_conn);
-
+unset($_POST, $db_conn, $result, $row);
 exit; /*-- EXIT FILE --*/ ?>

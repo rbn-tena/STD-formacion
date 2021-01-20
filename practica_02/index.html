@@ -45,7 +45,7 @@
 				</p>
 			</form>
 		</div>
-		
+		<div id="div_log"></div>
 		<div id="div_table" style="display:none"><!--/div donde ira la tabla/-->
 			<table border="1" width=100%;><!--/borde de 1px y 100% de ancho/-->
 				<thead id="head_table">
@@ -55,10 +55,7 @@
 					<!--/comienza el cuerpo de la tabla/-->
 				</tbody>
 			</table>
-		</div>
-		
-		<div id="log"></div>
-		
+		</div>	
 	</body>
 	
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -76,11 +73,12 @@
 			});
 			
 			function get_data(data){
-			
+				//div_table.innerHTML = "";
+				div_log.innerHTML = "";
 				console.log(data);
 				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
 				console.log(objet_data);
-				log.innerHTML = objet_data[0].message;	
+				div_log.innerHTML = objet_data[0].message;	
 			}
 		}
 		
@@ -103,35 +101,43 @@
 			
 			function get_table(table){
 			
-				console.log(data);
-				var objet_data = JSON.parse(table);	//creamos un objeto con el Json
-				console.log(objet_data);
-				//EMPIEZA TABLA 
-				
-				let head_table = document.getElementById('head_table');//convierte el encabezado en variable
-				let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
-				body_table.innerHTML = "";//borrado para evitar duplicados
-				let h_cell_pk = "<th>ID</th>";//celda encabezado nombre
-				let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
-				let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
-				let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
-				let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
-				let h_cell_email = "<th>EMAIL</th>";//celda encabezado telefono
+				console.log(table);
+				var objet_table = JSON.parse(table);	//creamos un objeto con el Json
+				console.log(objet_table);
+				div_log.innerHTML = "";
 
-				head_table.innerHTML = "<tr>"+h_cell_pk+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
+				if (objet_table[0].code < 0){
+					console.log(objet_table.length);
+					div_log.innerHTML = objet_table[0].message;	
+				}
+				else{
+					//EMPIEZA TABLA 
+					
+					let head_table = document.getElementById('head_table');//convierte el encabezado en variable
+					let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
+					body_table.innerHTML = "";//borrado para evitar duplicados
+					let h_cell_pk = "<th>ID</th>";//celda encabezado nombre
+					let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
+					let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
+					let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
+					let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
+					let h_cell_email = "<th>EMAIL</th>";//celda encabezado telefono
 
-				var amount = objet_data.length;//cantidad de lineas a introducir
-									
-				for (var i = 0; i < amount; i++) {//bucle para insertar las lineas
-									  
-					let t_pk = "<td>"+objet_data[i].pk_tbl+"</td>";//celda nombre
-					let t_cell_name = "<td>"+objet_data[i].name_tbl+"</td>";//celda nombre
-					let t_cell_first_ln = "<td>"+objet_data[i].first_last_name_tbl+"</td>";//celda 1e apellido
-					let t_cell_second_ln = "<td>"+objet_data[i].second_last_name_tbl+"</td>";//celda 2o apellido
-					let t_cell_phone = "<td>"+objet_data[i].phone_tbl+"</td>";//celda telefono
-					let t_cell_email = "<td>"+objet_data[i].email_tbl+"</td>";//celda email
-																console.log(t_cell_name,t_cell_first_ln,t_cell_second_ln, t_cell_phone,t_cell_email );
-					body_table.innerHTML += "<tr>"+t_pk+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+t_cell_email+"</tr>";		//introduce linea en cuerpo de la tabla
+					head_table.innerHTML = "<tr>"+h_cell_pk+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
+
+					var amount = objet_table.length;//cantidad de lineas a introducir
+										
+					for (var i = 0; i < amount; i++) {//bucle para insertar las lineas
+										
+						let t_pk = "<td>"+objet_table[i].row_pk+"</td>";//celda nombre
+						let t_cell_name = "<td>"+objet_table[i].row_name+"</td>";//celda nombre
+						let t_cell_first_ln = "<td>"+objet_table[i].row_name_last_first+"</td>";//celda 1e apellido
+						let t_cell_second_ln = "<td>"+objet_table[i].row_name_last_second+"</td>";//celda 2o apellido
+						let t_cell_phone = "<td>"+objet_table[i].row_phone+"</td>";//celda telefono
+						let t_cell_email = "<td>"+objet_table[i].row_email+"</td>";//celda email
+						console.log(t_cell_name,t_cell_first_ln,t_cell_second_ln, t_cell_phone,t_cell_email );
+						body_table.innerHTML += "<tr>"+t_pk+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+t_cell_email+"</tr>";		//introduce linea en cuerpo de la tabla
+					}
 				}
 			}
 		}
@@ -150,11 +156,11 @@
 			});
 			
 			function get_info(info){
-			
-				console.log(info);
-				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
-				console.log(objet_data);
-				log.innerHTML += "<p>"+objet_data+"</p>";
+				//div_table.innerHTML = "";
+				div_log.innerHTML = "";
+				var objet_info = JSON.parse(info);	//creamos un objeto con el Json
+				console.log(objet_info);
+				div_log.innerHTML = objet_info[0].message;	
 			}
 		}
 		
@@ -171,12 +177,12 @@
 				return false;
 			});
 			
-			function info_delete(data_delete){
-			
-				console.log(data_delete);
-				var objet_data = JSON.parse(data_delete);	//creamos un objeto con el Json
-				console.log(objet_data);
-				log.innerHTML += "<p>"+objet_data+"</p>";	
+			function info_delete(info_delete){
+				//div_table.innerHTML = "";
+				div_log.innerHTML = "";
+				var objet_info = JSON.parse(info_delete);	//creamos un objeto con el Json
+				console.log(objet_info);
+				div_log.innerHTML = objet_info[0].message;
 			}
 		}
 		
