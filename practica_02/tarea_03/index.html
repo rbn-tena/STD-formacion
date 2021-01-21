@@ -1,0 +1,192 @@
+<html>
+	<head>
+		
+		<title>PRACTICA 02 - TAREA 03</title>
+
+		<meta http-equiv='content-type' content='text/html; charset=utf-8'>
+		<meta http-equiv='content-type' content='application/xhtml+xml; charset=utf-8'>
+		<meta http-equiv='content-style-type' content='text/css'>
+		<!--<link href="./style_02.css" type="text/css" rel="stylesheet" /><!-- ./para dentro de la carpeta en la que esta ../para retroceder a la anterior ../../para retroceder dos carpetas-->
+
+	</head>
+	
+	<body>
+		<div id= "div_form">
+			<form id="form"  method="POST">
+				<p>
+					<label for="name">Nombre:</label>
+					<input type="text" name="name" id="name" >
+				</p>	
+				<p>
+					<label for="name_last_first">Primer apellido:</label>
+					<input type="text" name="name_last_first" id="name_last_first" >
+				</p>
+				<p>
+					<label for="name_last_second">Segundo apellido:</label>
+					<input type="text" name="name_last_second" id="name_last_second" >
+				</p>
+				<p>
+					<label for="phone">Teléfono:</label>	
+					<input type="tel" name="phone" id="phone" >
+				</p>
+				<p>
+					<label for="email">Email:</label>	
+					<input type="email" name="email" id="email" >
+				</p>
+				<p>
+					<button onclick="create()">GUARDAR NUEVO</button>
+					<button onclick="read()">VER</button>
+				</p>
+				<p>
+					<label for="pk">Modificar Nº:</label>	
+					<input type="text" name="pk" id="pk" >
+					<button onclick="update()">MODIFICAR</button>
+					<button onclick="dele()">ELIMINAR</button>
+				</p>
+			</form>
+		</div>
+		<div id="div_log"></div>
+		<div id="div_table" style="display:none"><!--/div donde ira la tabla/-->
+			<table border="1" width=100%;><!--/borde de 1px y 100% de ancho/-->
+				<thead id="head_table">
+					<!--/comienza la cabecera/-->
+				</thead>
+				<tbody id="body_table">
+					<!--/comienza el cuerpo de la tabla/-->
+				</tbody>
+			</table>
+		</div>	
+	</body>
+	
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<script>
+	
+		function create() {
+			
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				$.post("create/create.php", data_form, get_data);
+			
+				return false;
+			});
+			
+			function get_data(data){
+				//div_table.innerHTML = "";
+				div_log.innerHTML = "";
+				console.log(data);
+				var objet_data = JSON.parse(data);	//creamos un objeto con el Json
+				console.log(objet_data);
+				div_log.innerHTML = objet_data[0].message;	
+			}
+		}
+		
+	</script>
+	
+	<script>
+		
+		function read() {
+			
+			document.getElementById('div_table').style.display ='inherit';
+			console.log("hola1");
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				console.log("hola2");
+				$.post("read/read.php", data_form, get_table);
+			
+				return false;
+			});
+			
+			function get_table(table){
+			
+				console.log(table);
+				var objet_table = JSON.parse(table);	//creamos un objeto con el Json
+				console.log(objet_table);
+				div_log.innerHTML = "";
+
+				if (objet_table[0].code < 0){
+					console.log(objet_table.length);
+					div_log.innerHTML = objet_table[0].message;	
+				}
+				else{
+					//EMPIEZA TABLA 
+					
+					let head_table = document.getElementById('head_table');//convierte el encabezado en variable
+					let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
+					body_table.innerHTML = "";//borrado para evitar duplicados
+					let h_cell_pk = "<th>ID</th>";//celda encabezado nombre
+					let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
+					let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
+					let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
+					let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
+					let h_cell_email = "<th>EMAIL</th>";//celda encabezado telefono
+
+					head_table.innerHTML = "<tr>"+h_cell_pk+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
+
+					var amount = objet_table.length;//cantidad de lineas a introducir
+										
+					for (var i = 0; i < amount; i++) {//bucle para insertar las lineas
+										
+						let t_pk = "<td>"+objet_table[i].row_pk+"</td>";//celda nombre
+						let t_cell_name = "<td>"+objet_table[i].row_name+"</td>";//celda nombre
+						let t_cell_first_ln = "<td>"+objet_table[i].row_name_last_first+"</td>";//celda 1e apellido
+						let t_cell_second_ln = "<td>"+objet_table[i].row_name_last_second+"</td>";//celda 2o apellido
+						let t_cell_phone = "<td>"+objet_table[i].row_phone+"</td>";//celda telefono
+						let t_cell_email = "<td>"+objet_table[i].row_email+"</td>";//celda email
+						console.log(t_cell_name,t_cell_first_ln,t_cell_second_ln, t_cell_phone,t_cell_email );
+						body_table.innerHTML += "<tr>"+t_pk+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+t_cell_email+"</tr>";		//introduce linea en cuerpo de la tabla
+					}
+				}
+			}
+		}
+		
+	</script>	
+	<script>
+		
+		function update() {
+			
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				$.post("update/update.php", data_form, get_info);
+			
+				return false;
+			});
+			
+			function get_info(info){
+				//div_table.innerHTML = "";
+				div_log.innerHTML = "";
+				var objet_info = JSON.parse(info);	//creamos un objeto con el Json
+				console.log(objet_info);
+				div_log.innerHTML = objet_info[0].message;	
+			}
+		}
+		
+	</script>	
+	<script>
+
+		function dele() {
+			
+			$("#form").submit(function(){
+				var data_form=$(this).serialize(); 
+				console.log(data_form);
+				$.post("delete/delete.php", data_form, info_delete);
+			
+				return false;
+			});
+			
+			function info_delete(info_delete){
+				//div_table.innerHTML = "";
+				div_log.innerHTML = "";
+				var objet_info = JSON.parse(info_delete);	//creamos un objeto con el Json
+				console.log(objet_info);
+				div_log.innerHTML = objet_info[0].message;
+			}
+		}
+		
+		
+	</script>
+	
+</html>

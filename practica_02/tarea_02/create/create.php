@@ -1,6 +1,6 @@
 <?php
-include_once('../config/db_conf.php');
-include_once('../utilities/helper.php');
+include_once('../../config/db_conf.php');
+include_once('../../utilities/helper.php');
 $error="";
 // Check resquest
 if(empty($_POST)){ $error .= '<p>No se han enviado datos</p>'; }

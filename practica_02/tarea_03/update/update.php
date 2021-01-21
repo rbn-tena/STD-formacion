@@ -1,6 +1,6 @@
 <?php
-include_once('../config/db_conf.php');
-include_once('../utilities/helper.php');
+include_once('../../config/db_conf.php');
+include_once('../../utilities/helper.php');
 
 $sql = 'UPDATE `schedule` SET';
 $count=0;

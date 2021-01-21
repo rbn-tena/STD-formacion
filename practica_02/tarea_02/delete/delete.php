@@ -1,6 +1,6 @@
 <?php
-include_once('../config/db_conf.php');
-include_once('../utilities/helper.php');
+include_once('../../config/db_conf.php');
+include_once('../../utilities/helper.php');
 
 $sql = 'DELETE FROM `schedule` WHERE `schedule`.`pk` = '. $_POST['pk'];
 if(empty($_POST['pk'])){ send_err(-1, '<p>Introduzca el número de registro a eliminar</p>'); exit; }						
