@@ -1,0 +1,194 @@
+<html>
+	<head>
+		
+		<title>PRACTICA 03 - TAREA 02</title>
+
+		<meta http-equiv='content-type' content='text/html; charset=utf-8'>
+		<meta http-equiv='content-type' content='application/xhtml+xml; charset=utf-8'>
+		<meta http-equiv='content-style-type' content='text/css'>
+
+	</head>
+	
+	<body>
+		<div id= "div_form">
+			<!--<form id="form"  method="POST"> NO PUEDE SER FORM  -->
+				<p>
+					<label for="name">Nombre:</label>
+					<input type="text" name="name" id="name" value="">
+				</p>	
+				<p>
+					<label for="name_last_first">Primer apellido:</label>
+					<input type="text" name="name_last_first" id="name_last_first" value="">
+				</p>
+				<p>
+					<label for="name_last_second">Segundo apellido:</label>
+					<input type="text" name="name_last_second" id="name_last_second" value="">
+				</p>
+				<p>
+					<label for="phone">Teléfono:</label>	
+					<input type="tel" name="phone" id="phone" value="">
+				</p>
+				<p>
+					<label for="email">Email:</label>	
+					<input type="email" name="email" id="email" value="">
+				</p>
+				<p>
+					<button onclick="create()">GUARDAR NUEVO</button>
+					<button onclick="read()">VER</button>
+				</p>
+				<p>
+					<label for="pk">Modificar Nº:</label>	
+					<input type="text" name="pk" id="pk" value="">
+					<button onclick="update()">MODIFICAR</button>
+					<button onclick="dele()">ELIMINAR</button>
+				</p>
+			<!--</form>-->
+		</div>
+		<div id="div_log"></div>
+		<div id="div_table" style="display:none"><!--/div donde ira la tabla/-->
+			<table border="1" width=100%;><!--/borde de 1px y 100% de ancho/-->
+				<thead id="head_table">
+					<!--/comienza la cabecera/-->
+				</thead>
+				<tbody id="body_table">
+					<!--/comienza el cuerpo de la tabla/-->
+				</tbody>
+			</table>
+		</div>	
+	</body>
+	
+	<script type="text/javascript" languaje="javascript">
+	
+		function create() {
+			
+			var name = document.getElementById("name").value;
+			var name_last_first = document.getElementById("name_last_first").value;
+			var name_last_second = document.getElementById("name_last_second").value;
+			var phone = document.getElementById("phone").value;
+			var email = document.getElementById("email").value;
+
+			var data = new  XMLHttpRequest(); 
+			data.open("POST", "php.php", true);
+			data.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			data.send("case=create&name="+name+"&name_last_first="+name_last_first+"&name_last_second="+name_last_second+"&phone="+phone+"&email="+email);
+						
+			data.onreadystatechange = function(){
+				if(data.readyState == 4 && data.status == 200){
+
+					div_log.innerHTML = "";
+					console.log(data);
+					data_response = data.responseText;
+					var objet_data = JSON.parse(data_response);
+					console.log(objet_data);
+					div_log.innerHTML = objet_data[0].message;
+				}
+			}
+		}
+		
+		function read() {
+			
+			var name = document.getElementById("name").value;
+			var name_last_first = document.getElementById("name_last_first").value;
+			var name_last_second = document.getElementById("name_last_second").value;
+			var phone = document.getElementById("phone").value;
+			var email = document.getElementById("email").value;
+
+			var data = new  XMLHttpRequest(); 
+			data.open("POST", "php.php", true);
+			data.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			data.send("case=read&name="+name+"&name_last_first="+name_last_first+"&name_last_second="+name_last_second+"&phone="+phone+"&email="+email);
+			
+			data.onreadystatechange = function(){
+				if(data.readyState == 4 && data.status == 200){
+					div_log.innerHTML = "";
+					console.log(data);
+					data_response = data.responseText;
+					var objet_data = JSON.parse(data_response);
+					console.log(data_response);
+
+					if (data_response[0].code < 0){
+						console.log(data_response.length);
+						div_log.innerHTML = data_response[0].message;	
+					}
+					else{
+						document.getElementById('div_table').style.display ='inherit'; 
+						console.log("hola");
+						let head_table = document.getElementById('head_table');//convierte el encabezado en variable
+						let body_table = document.getElementById('body_table');//convierte el cuerpo en variable
+						body_table.innerHTML = "";//borrado para evitar duplicados
+						let h_cell_pk = "<th>ID</th>";//celda encabezado nombre
+						let h_cell_name = "<th>NOMBRE</th>";//celda encabezado nombre
+						let h_cell_first_ln = "<th>PRIMER APELLIDO</th>";//celda encabezado 1e apellido
+						let h_cell_second_ln = "<th>SEGUNDO APELLIDO</th>";//celda encabezada 2o apellido
+						let h_cell_phone = "<th>TELEFONO</th>";//celda encabezado telefono
+						let h_cell_email = "<th>EMAIL</th>";//celda encabezado telefono
+
+						head_table.innerHTML = "<tr>"+h_cell_pk+h_cell_name + h_cell_first_ln + h_cell_second_ln + h_cell_phone+h_cell_email+"</tr>";//inserta el encabezado
+
+						var amount = objet_data.length;//cantidad de lineas a introducir
+						console.log(amount);					
+						for (var i = 0; i < amount; i++) {//bucle para insertar las lineas
+											
+							let t_pk = "<td>"+objet_data[i].row_pk+"</td>";//celda id
+							let t_cell_name = "<td>"+objet_data[i].row_name+"</td>";//celda nombre
+							let t_cell_first_ln = "<td>"+objet_data[i].row_name_last_first+"</td>";//celda 1e apellido
+							let t_cell_second_ln = "<td>"+objet_data[i].row_name_last_second+"</td>";//celda 2o apellido
+							let t_cell_phone = "<td>"+objet_data[i].row_phone+"</td>";//celda telefono
+							let t_cell_email = "<td>"+objet_data[i].row_email+"</td>";//celda email
+							//console.log(t_cell_name,t_cell_first_ln,t_cell_second_ln, t_cell_phone,t_cell_email );
+							body_table.innerHTML += "<tr>"+t_pk+t_cell_name + t_cell_first_ln + t_cell_second_ln + t_cell_phone+t_cell_email+"</tr>";		//introduce linea en cuerpo de la tabla
+						}
+					}
+				}
+			}
+		}
+		
+		function update() {
+				
+			var name = document.getElementById("name").value;
+			var name_last_first = document.getElementById("name_last_first").value;
+			var name_last_second = document.getElementById("name_last_second").value;
+			var phone = document.getElementById("phone").value;
+			var email = document.getElementById("email").value;
+			var pk = document.getElementById("pk").value;
+
+			var data = new  XMLHttpRequest(); 
+			data.open("POST", "php.php", true);
+			data.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			data.send("case=update&name="+name+"&name_last_first="+name_last_first+"&name_last_second="+name_last_second+"&phone="+phone+"&email="+email+"&pk="+pk);
+			console.log(data);
+
+			data.onreadystatechange = function(){
+				if(data.readyState == 4 && data.status == 200){
+					div_log.innerHTML = "";
+					data_response = data.responseText;
+					console.log(data_response);
+					var objet_info = JSON.parse(data_response);	//creamos un objeto con el Json
+					console.log(objet_info);
+					div_log.innerHTML = objet_info[0].message;
+				}
+			}
+		}
+
+		function dele() {
+
+			var pk = document.getElementById("pk").value;
+			
+			var data = new  XMLHttpRequest(); 
+			data.open("POST", "php.php", true);
+			data.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			data.send("case=delete&pk="+pk);
+						
+			data.onreadystatechange = function(){
+				if(data.readyState == 4 && data.status == 200){
+					div_log.innerHTML = "";
+					data_response = data.responseText;
+					console.log(data_response);
+					var objet_info = JSON.parse(data_response);	//creamos un objeto con el Json
+					console.log(objet_info);
+					div_log.innerHTML = objet_info[0].message;
+				}
+			}
+		}
+	</script>	
+</html>
